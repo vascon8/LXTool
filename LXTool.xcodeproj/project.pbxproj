@@ -1,0 +1,465 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0F0488771CE0762900375563 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0488761CE0762900375563 /* Cocoa.framework */; };
+		0F0488811CE0762900375563 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F04887F1CE0762900375563 /* InfoPlist.strings */; };
+		0F0488851CE0762900375563 /* LXTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488841CE0762900375563 /* LXTool.m */; };
+		0F04888C1CE0762900375563 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F04888B1CE0762900375563 /* XCTest.framework */; };
+		0F04888D1CE0762900375563 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0488761CE0762900375563 /* Cocoa.framework */; };
+		0F0488901CE0762A00375563 /* LXTool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0488731CE0762900375563 /* LXTool.framework */; };
+		0F0488961CE0762A00375563 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F0488941CE0762A00375563 /* InfoPlist.strings */; };
+		0F0488981CE0762A00375563 /* LXToolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488971CE0762A00375563 /* LXToolTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0F04888E1CE0762A00375563 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0F04886A1CE0762900375563 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0F0488721CE0762900375563;
+			remoteInfo = LXTool;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0F0488731CE0762900375563 /* LXTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LXTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F0488761CE0762900375563 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		0F0488791CE0762900375563 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		0F04887A1CE0762900375563 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		0F04887B1CE0762900375563 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		0F04887E1CE0762900375563 /* LXTool-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LXTool-Info.plist"; sourceTree = "<group>"; };
+		0F0488801CE0762900375563 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0F0488821CE0762900375563 /* LXTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LXTool-Prefix.pch"; sourceTree = "<group>"; };
+		0F0488831CE0762900375563 /* LXTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXTool.h; sourceTree = "<group>"; };
+		0F0488841CE0762900375563 /* LXTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXTool.m; sourceTree = "<group>"; };
+		0F04888A1CE0762900375563 /* LXToolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LXToolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F04888B1CE0762900375563 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		0F0488931CE0762A00375563 /* LXToolTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LXToolTests-Info.plist"; sourceTree = "<group>"; };
+		0F0488951CE0762A00375563 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0F0488971CE0762A00375563 /* LXToolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXToolTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0F04886F1CE0762900375563 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F0488771CE0762900375563 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F0488871CE0762900375563 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F04888D1CE0762900375563 /* Cocoa.framework in Frameworks */,
+				0F04888C1CE0762900375563 /* XCTest.framework in Frameworks */,
+				0F0488901CE0762A00375563 /* LXTool.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0F0488691CE0762900375563 = {
+			isa = PBXGroup;
+			children = (
+				0F04887C1CE0762900375563 /* LXTool */,
+				0F0488911CE0762A00375563 /* LXToolTests */,
+				0F0488751CE0762900375563 /* Frameworks */,
+				0F0488741CE0762900375563 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0F0488741CE0762900375563 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488731CE0762900375563 /* LXTool.framework */,
+				0F04888A1CE0762900375563 /* LXToolTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0F0488751CE0762900375563 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488761CE0762900375563 /* Cocoa.framework */,
+				0F04888B1CE0762900375563 /* XCTest.framework */,
+				0F0488781CE0762900375563 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0F0488781CE0762900375563 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488791CE0762900375563 /* Foundation.framework */,
+				0F04887A1CE0762900375563 /* CoreData.framework */,
+				0F04887B1CE0762900375563 /* AppKit.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		0F04887C1CE0762900375563 /* LXTool */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488831CE0762900375563 /* LXTool.h */,
+				0F0488841CE0762900375563 /* LXTool.m */,
+				0F04887D1CE0762900375563 /* Supporting Files */,
+			);
+			path = LXTool;
+			sourceTree = "<group>";
+		};
+		0F04887D1CE0762900375563 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0F04887E1CE0762900375563 /* LXTool-Info.plist */,
+				0F04887F1CE0762900375563 /* InfoPlist.strings */,
+				0F0488821CE0762900375563 /* LXTool-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0F0488911CE0762A00375563 /* LXToolTests */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488971CE0762A00375563 /* LXToolTests.m */,
+				0F0488921CE0762A00375563 /* Supporting Files */,
+			);
+			path = LXToolTests;
+			sourceTree = "<group>";
+		};
+		0F0488921CE0762A00375563 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488931CE0762A00375563 /* LXToolTests-Info.plist */,
+				0F0488941CE0762A00375563 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		0F0488701CE0762900375563 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		0F0488721CE0762900375563 /* LXTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F04889B1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXTool" */;
+			buildPhases = (
+				0F04886E1CE0762900375563 /* Sources */,
+				0F04886F1CE0762900375563 /* Frameworks */,
+				0F0488701CE0762900375563 /* Headers */,
+				0F0488711CE0762900375563 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LXTool;
+			productName = LXTool;
+			productReference = 0F0488731CE0762900375563 /* LXTool.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		0F0488891CE0762900375563 /* LXToolTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F04889E1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXToolTests" */;
+			buildPhases = (
+				0F0488861CE0762900375563 /* Sources */,
+				0F0488871CE0762900375563 /* Frameworks */,
+				0F0488881CE0762900375563 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0F04888F1CE0762A00375563 /* PBXTargetDependency */,
+			);
+			name = LXToolTests;
+			productName = LXToolTests;
+			productReference = 0F04888A1CE0762900375563 /* LXToolTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0F04886A1CE0762900375563 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = xinliu;
+				TargetAttributes = {
+					0F0488891CE0762900375563 = {
+						TestTargetID = 0F0488721CE0762900375563;
+					};
+				};
+			};
+			buildConfigurationList = 0F04886D1CE0762900375563 /* Build configuration list for PBXProject "LXTool" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 0F0488691CE0762900375563;
+			productRefGroup = 0F0488741CE0762900375563 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0F0488721CE0762900375563 /* LXTool */,
+				0F0488891CE0762900375563 /* LXToolTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0F0488711CE0762900375563 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F0488811CE0762900375563 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F0488881CE0762900375563 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F0488961CE0762A00375563 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0F04886E1CE0762900375563 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F0488851CE0762900375563 /* LXTool.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0F0488861CE0762900375563 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0F0488981CE0762A00375563 /* LXToolTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0F04888F1CE0762A00375563 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0F0488721CE0762900375563 /* LXTool */;
+			targetProxy = 0F04888E1CE0762A00375563 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0F04887F1CE0762900375563 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F0488801CE0762900375563 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0F0488941CE0762A00375563 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0F0488951CE0762A00375563 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0F0488991CE0762A00375563 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		0F04889A1CE0762A00375563 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		0F04889C1CE0762A00375563 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LXTool/LXTool-Prefix.pch";
+				INFOPLIST_FILE = "LXTool/LXTool-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		0F04889D1CE0762A00375563 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LXTool/LXTool-Prefix.pch";
+				INFOPLIST_FILE = "LXTool/LXTool-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		0F04889F1CE0762A00375563 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/LXTool.framework/Versions/A/LXTool";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LXTool/LXTool-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "LXToolTests/LXToolTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		0F0488A01CE0762A00375563 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/LXTool.framework/Versions/A/LXTool";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LXTool/LXTool-Prefix.pch";
+				INFOPLIST_FILE = "LXToolTests/LXToolTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0F04886D1CE0762900375563 /* Build configuration list for PBXProject "LXTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F0488991CE0762A00375563 /* Debug */,
+				0F04889A1CE0762A00375563 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0F04889B1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F04889C1CE0762A00375563 /* Debug */,
+				0F04889D1CE0762A00375563 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		0F04889E1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXToolTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0F04889F1CE0762A00375563 /* Debug */,
+				0F0488A01CE0762A00375563 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0F04886A1CE0762900375563 /* Project object */;
+}
