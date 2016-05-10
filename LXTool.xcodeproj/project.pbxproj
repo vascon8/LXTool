@@ -15,6 +15,21 @@
 		0F0488901CE0762A00375563 /* LXTool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0488731CE0762900375563 /* LXTool.framework */; };
 		0F0488961CE0762A00375563 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F0488941CE0762A00375563 /* InfoPlist.strings */; };
 		0F0488981CE0762A00375563 /* LXToolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488971CE0762A00375563 /* LXToolTests.m */; };
+		0F0488A71CE0772D00375563 /* ANSIUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488A31CE0772D00375563 /* ANSIUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F0488A81CE0772D00375563 /* ANSIUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488A41CE0772D00375563 /* ANSIUtility.m */; };
+		0F0488A91CE0772D00375563 /* Utility.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488A51CE0772D00375563 /* Utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F0488AA1CE0772D00375563 /* Utility.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488A61CE0772D00375563 /* Utility.m */; };
+		0F0488AD1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488AB1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F0488AE1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488AC1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m */; };
+		0F0488B51CE0778300375563 /* LXIvar.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488B01CE0778300375563 /* LXIvar.h */; };
+		0F0488B61CE0778300375563 /* LXIvar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488B11CE0778300375563 /* LXIvar.m */; };
+		0F0488B71CE0778300375563 /* NSObject+LXDict.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488B21CE0778300375563 /* NSObject+LXDict.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F0488B81CE0778300375563 /* NSObject+LXDict.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488B31CE0778300375563 /* NSObject+LXDict.m */; };
+		0F0488BF1CE077FC00375563 /* LXKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488BB1CE077FC00375563 /* LXKeyChain.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F0488C01CE077FC00375563 /* LXKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488BC1CE077FC00375563 /* LXKeyChain.m */; };
+		0F0488C11CE077FC00375563 /* LXLicenseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488BD1CE077FC00375563 /* LXLicenseTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F0488C21CE077FC00375563 /* LXLicenseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488BE1CE077FC00375563 /* LXLicenseTool.m */; };
+		0F0488C31CE07ABE00375563 /* LXTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488831CE0762900375563 /* LXTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +58,20 @@
 		0F0488931CE0762A00375563 /* LXToolTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LXToolTests-Info.plist"; sourceTree = "<group>"; };
 		0F0488951CE0762A00375563 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0F0488971CE0762A00375563 /* LXToolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXToolTests.m; sourceTree = "<group>"; };
+		0F0488A31CE0772D00375563 /* ANSIUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANSIUtility.h; sourceTree = "<group>"; };
+		0F0488A41CE0772D00375563 /* ANSIUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ANSIUtility.m; sourceTree = "<group>"; };
+		0F0488A51CE0772D00375563 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utility.h; sourceTree = "<group>"; };
+		0F0488A61CE0772D00375563 /* Utility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Utility.m; sourceTree = "<group>"; };
+		0F0488AB1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TrimLeadingWhitespace.h"; sourceTree = "<group>"; };
+		0F0488AC1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TrimLeadingWhitespace.m"; sourceTree = "<group>"; };
+		0F0488B01CE0778300375563 /* LXIvar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXIvar.h; sourceTree = "<group>"; };
+		0F0488B11CE0778300375563 /* LXIvar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXIvar.m; sourceTree = "<group>"; };
+		0F0488B21CE0778300375563 /* NSObject+LXDict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+LXDict.h"; sourceTree = "<group>"; };
+		0F0488B31CE0778300375563 /* NSObject+LXDict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LXDict.m"; sourceTree = "<group>"; };
+		0F0488BB1CE077FC00375563 /* LXKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXKeyChain.h; sourceTree = "<group>"; };
+		0F0488BC1CE077FC00375563 /* LXKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXKeyChain.m; sourceTree = "<group>"; };
+		0F0488BD1CE077FC00375563 /* LXLicenseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLicenseTool.h; sourceTree = "<group>"; };
+		0F0488BE1CE077FC00375563 /* LXLicenseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLicenseTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +99,10 @@
 		0F0488691CE0762900375563 = {
 			isa = PBXGroup;
 			children = (
+				0F0488BA1CE077FC00375563 /* License Control */,
+				0F0488AF1CE0778300375563 /* LXDictObject */,
+				0F0488A21CE0764B00375563 /* Ext */,
+				0F0488A11CE0763E00375563 /* Utility */,
 				0F04887C1CE0762900375563 /* LXTool */,
 				0F0488911CE0762A00375563 /* LXToolTests */,
 				0F0488751CE0762900375563 /* Frameworks */,
@@ -144,6 +177,50 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0F0488A11CE0763E00375563 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488A31CE0772D00375563 /* ANSIUtility.h */,
+				0F0488A41CE0772D00375563 /* ANSIUtility.m */,
+				0F0488A51CE0772D00375563 /* Utility.h */,
+				0F0488A61CE0772D00375563 /* Utility.m */,
+			);
+			name = Utility;
+			path = LXTool/Utility;
+			sourceTree = "<group>";
+		};
+		0F0488A21CE0764B00375563 /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488AB1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h */,
+				0F0488AC1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m */,
+			);
+			name = Ext;
+			path = LXTool/Ext;
+			sourceTree = "<group>";
+		};
+		0F0488AF1CE0778300375563 /* LXDictObject */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488B01CE0778300375563 /* LXIvar.h */,
+				0F0488B11CE0778300375563 /* LXIvar.m */,
+				0F0488B21CE0778300375563 /* NSObject+LXDict.h */,
+				0F0488B31CE0778300375563 /* NSObject+LXDict.m */,
+			);
+			path = LXDictObject;
+			sourceTree = "<group>";
+		};
+		0F0488BA1CE077FC00375563 /* License Control */ = {
+			isa = PBXGroup;
+			children = (
+				0F0488BB1CE077FC00375563 /* LXKeyChain.h */,
+				0F0488BC1CE077FC00375563 /* LXKeyChain.m */,
+				0F0488BD1CE077FC00375563 /* LXLicenseTool.h */,
+				0F0488BE1CE077FC00375563 /* LXLicenseTool.m */,
+			);
+			path = "License Control";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -151,6 +228,14 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0488C31CE07ABE00375563 /* LXTool.h in Headers */,
+				0F0488A91CE0772D00375563 /* Utility.h in Headers */,
+				0F0488AD1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h in Headers */,
+				0F0488A71CE0772D00375563 /* ANSIUtility.h in Headers */,
+				0F0488B71CE0778300375563 /* NSObject+LXDict.h in Headers */,
+				0F0488BF1CE077FC00375563 /* LXKeyChain.h in Headers */,
+				0F0488C11CE077FC00375563 /* LXLicenseTool.h in Headers */,
+				0F0488B51CE0778300375563 /* LXIvar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,7 +334,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0488B61CE0778300375563 /* LXIvar.m in Sources */,
+				0F0488B81CE0778300375563 /* NSObject+LXDict.m in Sources */,
+				0F0488C01CE077FC00375563 /* LXKeyChain.m in Sources */,
 				0F0488851CE0762900375563 /* LXTool.m in Sources */,
+				0F0488AA1CE0772D00375563 /* Utility.m in Sources */,
+				0F0488AE1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m in Sources */,
+				0F0488A81CE0772D00375563 /* ANSIUtility.m in Sources */,
+				0F0488C21CE077FC00375563 /* LXLicenseTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +542,7 @@
 				0F04889D1CE0762A00375563 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0F04889E1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXToolTests" */ = {
 			isa = XCConfigurationList;
@@ -458,6 +551,7 @@
 				0F0488A01CE0762A00375563 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
