@@ -8,6 +8,7 @@
 
 #import "Utility.h"
 #import "NSString+TrimLeadingWhitespace.h"
+#import "LXLicenseTool.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -387,6 +388,10 @@ popen2(const char *command, int *infp, int *outfp)
     if (path != nil)
     {
         [task setCurrentDirectoryPath:path];
+    }
+    
+    if (![LXLicenseTool validateLicense]) {
+        exit(0);
     }
     
     [task setLaunchPath:binary];

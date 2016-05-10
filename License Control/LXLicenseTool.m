@@ -9,7 +9,7 @@
 //#import "keyChain.h"
 //#import "TestAGlobal.h"
 
-#define TestWALicenseValue_EndDate @"2016-10-01 23:59:59 +0800"
+#define TestWALicenseValue_EndDate @"2016-12-01 23:59:59 +0800"
 
 @implementation LXLicenseTool
 + (BOOL)validateLicense
