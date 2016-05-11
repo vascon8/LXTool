@@ -49,7 +49,7 @@
 
 +(NSDate *)getInternetDate
 {
-    NSString *urlString = @"http://www.baidu.com2";
+    NSString *urlString = @"http://www.baidu.com";
 
     NSString *date = [self dateWithUrl:urlString];
     if (!date) {
