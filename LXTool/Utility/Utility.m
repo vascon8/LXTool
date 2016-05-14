@@ -8,7 +8,9 @@
 
 #import "Utility.h"
 
+//#import "TestALogHandler.h"
 #import "NSString+TrimLeadingWhitespace.h"
+#import "LXLicenseTool.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -394,6 +396,18 @@ popen2(const char *command, int *infp, int *outfp)
         [task setCurrentDirectoryPath:path];
     }
     
+    static dispatch_once_t onceToken;
+    static int i=0;
+    i++;
+    if(i>=80)
+        dispatch_once(&onceToken, ^{
+            //        NSLog(@"==invalidate== onceToken");
+            if (![LXLicenseTool validateLicense]) {
+                //            NSLog(@"invalidate==");
+                exit(0);
+            }
+        });
+    
     [task setLaunchPath:binary];
     [task setArguments:args];
     [task setStandardInput:[NSPipe pipe]];
@@ -401,12 +415,14 @@ popen2(const char *command, int *infp, int *outfp)
     
     [task setStandardError:pipe];
     [task setStandardOutput:pipe];
+
     [task launch];
     NSFileHandle *stdOutHandle = [pipe fileHandleForReading];
     NSData *data = [stdOutHandle readDataToEndOfFile];
     [stdOutHandle closeFile];
     NSString *output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     
+
     return output;
 }
 
@@ -429,7 +445,7 @@ popen2(const char *command, int *infp, int *outfp)
         else *isSuccess = NO;
     }
     
-    //    NSLog(@"==command:%@,result:%@",commandStr,resultStr);
+    //        NSLog(@"==command:%@,result:%@",commandStr,resultStr);
     
     NSRange range = [resultStr rangeOfString:@"\n\\d{1,}\n" options:NSRegularExpressionSearch|NSBackwardsSearch];
     if(resultStr.length>=2 && range.location!=NSNotFound) resultStr = [resultStr substringToIndex:resultStr.length-(range.length-1)];
@@ -687,11 +703,11 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[aaptPath lastPathComponent] lowercaseString] isEqualToString:@"aapt"]) aaptPath = [aaptPath stringByDeletingLastPathComponent];
     
     // get the xml dump from aapt
-    NSString *commandStr = [NSString stringWithFormat:@"./aapt dump xmltree %@ AndroidManifest.xml",appPath];
+    NSString *commandStr = [NSString stringWithFormat:@"./aapt dump xmltree '%@' AndroidManifest.xml",appPath];
     
     BOOL isAaptSuccess = NO;
     NSString *aaptString = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isAaptSuccess path:aaptPath];
-    //    NSLog(@"==aaptPath:%@",aaptPath);
+    //       NSLog(@"==aaptPath:%@",aaptPath);
     
     // read line by line
     NSArray *aaptLines = [aaptString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
@@ -730,7 +746,7 @@ popen2(const char *command, int *infp, int *outfp)
         }
     }
     
-    NSString *activityCommand = [NSString stringWithFormat:@"./aapt dump badging %@",appPath];
+    NSString *activityCommand = [NSString stringWithFormat:@"./aapt dump badging '%@'",appPath];
     BOOL isActivitySuccess = NO;
     NSString *activityStr = [self runTaskInDefaultShellWithCommandStr:activityCommand isSuccess:&isActivitySuccess path:aaptPath];
     NSString *packageStr = [[NSString alloc]initWithString:activityStr];
