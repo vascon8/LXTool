@@ -75,7 +75,7 @@ typedef void(^LXIvarBlock)(LXIvar *aIvar,BOOL *stop);
             value = [self modelObjectsWithModelName:modelName modelDict:modelDict value:value];
         }
         
-        if (value) [self setValue:value forKey:aIvar.propertyName];
+        if (value) [self setValue:value forKey:aIvar.ivName];
     }];
 }
 - (NSArray *)modelObjectsWithModelName:(NSString *)modelName modelDict:(NSDictionary*)modelDict value:(NSArray *)value

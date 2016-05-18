@@ -9,4 +9,5 @@
 
 @interface LXLicenseTool : NSObject
 + (BOOL)validateLicense;
++ (BOOL)validateLicenseEndDate:(NSString*)endDate;
 @end

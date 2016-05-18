@@ -9,10 +9,14 @@
 //#import "keyChain.h"
 //#import "TestAGlobal.h"
 
-#define TestWALicenseValue_EndDate @"2016-12-01 23:59:59 +0800"
+#define TestWALicenseValue_EndDate @"2016-12-28 23:59:59 +0800"
 
 @implementation LXLicenseTool
 + (BOOL)validateLicense
+{
+    return [self validateLicenseEndDate:TestWALicenseValue_EndDate];
+}
++ (BOOL)validateLicenseEndDate:(NSString*)endDate
 {
     NSDate *expireDate;
     NSDate *currentDate = [self getInternetDate];
@@ -20,7 +24,12 @@
     NSDateFormatter *myDate = [[NSDateFormatter alloc] init];
     [myDate setDateFormat:@"yyyy-MM-dd HH:mm:ss Z"];
     [myDate setLocale:[NSLocale systemLocale]];
-    expireDate = [myDate dateFromString:TestWALicenseValue_EndDate];
+    if (endDate) {
+        expireDate = [myDate dateFromString:endDate];
+    }
+    else{
+        expireDate = [myDate dateFromString:TestWALicenseValue_EndDate];
+    }
     
     if (!currentDate) {
         currentDate = [NSDate date];
