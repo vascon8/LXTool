@@ -313,7 +313,7 @@ popen2(const char *command, int *infp, int *outfp)
     
     if(packageArr && packageArr.count>0) [packageArr insertObject:@"请选择要测试的package" atIndex:0];
     //    NSLog(@"arr:%@",packageArr);
-    return packageArr;
+    return [packageArr sortedArrayUsingSelector:@selector(compare:)];
 }
 //adb -s 'uuid' shell pm path 'package-name'
 + (NSString *)readphoneApkWithUdid:(NSString *)udid pakcage:(NSString *)package androidBinaryPath:(NSString*)androidBinaryPath isSuccess:(BOOL*)isSuccess
