@@ -389,6 +389,37 @@ popen2(const char *command, int *infp, int *outfp)
     
     return isSystemDefaultPackage;
 }
+//./adb -s 192.168.57.101:5555 shell getprop ro.build.version.release
++ (NSString*)sdkVersionOfDevice:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath
+{
+    NSString *sdkVersion = @"unknown";
+    
+    androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:androidBinaryPath];
+    
+    if(!androidBinaryPath) {
+        sdkVersion = @"\nWarning:找不到adb!\n";
+        return sdkVersion;
+    }
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        return @"failed";
+    }
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell getprop ro.build.version.release",udid];
+    //    NSLog(@"==commandS:%@",commandStr);
+    
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    BOOL *isSuccess;
+    
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
+    
+    if (*isSuccess) {
+        sdkVersion = result;
+    }
+    
+    return sdkVersion;
+}
 #pragma mark - run method
 +(NSString*)runTaskWithBinary:(NSString*)binary arguments:(NSArray*)args path:(NSString*)path
 {
