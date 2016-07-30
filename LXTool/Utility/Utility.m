@@ -410,11 +410,11 @@ popen2(const char *command, int *infp, int *outfp)
     //    NSLog(@"==commandS:%@",commandStr);
     
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
-    BOOL *isSuccess;
+    BOOL isSuccess = NO;
     
-    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
     
-    if (*isSuccess) {
+    if (isSuccess) {
         sdkVersion = result;
     }
     
