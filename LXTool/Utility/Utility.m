@@ -420,6 +420,43 @@ popen2(const char *command, int *infp, int *outfp)
     
     return sdkVersion;
 }
++ (NSString*)androidDeviceNameOfUdid:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath
+{
+    NSString *deviceName = @"";
+    
+    androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:androidBinaryPath];
+    
+    if(!androidBinaryPath) {
+        return deviceName;
+    }
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        return @"";
+    }
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb devices -l|grep '%@' ",udid];
+    //    NSLog(@"==commandS:%@",commandStr);
+    
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    BOOL isSuccess = NO;
+    
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
+    
+    if (isSuccess) {
+        NSString *pattern = @"model:";
+        NSString *endPattern = @" device:";
+        NSRange range = [result rangeOfString:pattern];
+        NSRange endRange = [result rangeOfString:endPattern options:NSBackwardsSearch];
+        
+        if (range.location != NSNotFound && endRange.location != NSNotFound) {
+            NSRange resultRange = NSMakeRange(range.location+range.length, endRange.location-range.location-range.length);
+            deviceName = [result substringWithRange:resultRange];
+        }
+    }
+    
+    return deviceName;
+}
 #pragma mark - run method
 +(NSString*)runTaskWithBinary:(NSString*)binary arguments:(NSArray*)args path:(NSString*)path
 {

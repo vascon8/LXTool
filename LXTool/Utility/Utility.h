@@ -25,6 +25,7 @@
 + (NSArray *)getAndroidDevicesWithSDKPath:(NSString *)sdkPath;
 //android device platform version
 + (NSString*)sdkVersionOfDevice:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath;
++ (NSString*)androidDeviceNameOfUdid:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath;
 
 + (NSArray *)getiOSDevicesSuccess:(BOOL*)isSuccess;
 + (NSDictionary *)getiOSUDIDs;
