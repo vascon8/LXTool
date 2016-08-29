@@ -27,9 +27,28 @@
 		0F0488B81CE0778300375563 /* NSObject+LXDict.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488B31CE0778300375563 /* NSObject+LXDict.m */; };
 		0F0488BF1CE077FC00375563 /* LXKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488BB1CE077FC00375563 /* LXKeyChain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F0488C01CE077FC00375563 /* LXKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488BC1CE077FC00375563 /* LXKeyChain.m */; };
-		0F0488C11CE077FC00375563 /* LXLicenseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488BD1CE077FC00375563 /* LXLicenseTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0F0488C21CE077FC00375563 /* LXLicenseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488BE1CE077FC00375563 /* LXLicenseTool.m */; };
 		0F0488C31CE07ABE00375563 /* LXTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488831CE0762900375563 /* LXTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FB87EB71D7479B600E1680B /* AA3DESManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EA01D7479B600E1680B /* AA3DESManager.h */; };
+		0FB87EB81D7479B600E1680B /* AA3DESManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EA11D7479B600E1680B /* AA3DESManager.m */; };
+		0FB87EB91D7479B600E1680B /* GTMBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EA31D7479B600E1680B /* GTMBase64.h */; };
+		0FB87EBA1D7479B600E1680B /* GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EA41D7479B600E1680B /* GTMBase64.m */; };
+		0FB87EBB1D7479B600E1680B /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EA51D7479B600E1680B /* GTMDefines.h */; };
+		0FB87EBC1D7479B600E1680B /* CCMBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EA71D7479B600E1680B /* CCMBase64.h */; };
+		0FB87EBD1D7479B600E1680B /* CCMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EA81D7479B600E1680B /* CCMBase64.m */; };
+		0FB87EBE1D7479B600E1680B /* CCMCryptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EA91D7479B600E1680B /* CCMCryptor.h */; };
+		0FB87EBF1D7479B600E1680B /* CCMCryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EAA1D7479B600E1680B /* CCMCryptor.m */; };
+		0FB87EC01D7479B600E1680B /* CCMKeyLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EAB1D7479B600E1680B /* CCMKeyLoader.h */; };
+		0FB87EC11D7479B600E1680B /* CCMKeyLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EAC1D7479B600E1680B /* CCMKeyLoader.m */; };
+		0FB87EC21D7479B600E1680B /* CCMPrivateKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EAD1D7479B600E1680B /* CCMPrivateKey.h */; };
+		0FB87EC31D7479B600E1680B /* CCMPrivateKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EAE1D7479B600E1680B /* CCMPrivateKey.m */; };
+		0FB87EC41D7479B600E1680B /* CCMPrivateKey_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EAF1D7479B600E1680B /* CCMPrivateKey_internal.h */; };
+		0FB87EC51D7479B600E1680B /* CCMPublicKey.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB01D7479B600E1680B /* CCMPublicKey.h */; };
+		0FB87EC61D7479B600E1680B /* CCMPublicKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB11D7479B600E1680B /* CCMPublicKey.m */; };
+		0FB87EC71D7479B600E1680B /* CCMPublicKey_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB21D7479B600E1680B /* CCMPublicKey_internal.h */; };
+		0FB87EC81D7479B600E1680B /* CSSMRSACryptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB31D7479B600E1680B /* CSSMRSACryptor.h */; };
+		0FB87EC91D7479B600E1680B /* CSSMRSACryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */; };
+		0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB51D7479B600E1680B /* LXLicenseTool.h */; };
+		0FB87ECB1D7479B600E1680B /* LXLicenseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB61D7479B600E1680B /* LXLicenseTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,8 +89,27 @@
 		0F0488B31CE0778300375563 /* NSObject+LXDict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LXDict.m"; sourceTree = "<group>"; };
 		0F0488BB1CE077FC00375563 /* LXKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXKeyChain.h; sourceTree = "<group>"; };
 		0F0488BC1CE077FC00375563 /* LXKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXKeyChain.m; sourceTree = "<group>"; };
-		0F0488BD1CE077FC00375563 /* LXLicenseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLicenseTool.h; sourceTree = "<group>"; };
-		0F0488BE1CE077FC00375563 /* LXLicenseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLicenseTool.m; sourceTree = "<group>"; };
+		0FB87EA01D7479B600E1680B /* AA3DESManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AA3DESManager.h; sourceTree = "<group>"; };
+		0FB87EA11D7479B600E1680B /* AA3DESManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AA3DESManager.m; sourceTree = "<group>"; };
+		0FB87EA31D7479B600E1680B /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
+		0FB87EA41D7479B600E1680B /* GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GTMBase64.m; sourceTree = "<group>"; };
+		0FB87EA51D7479B600E1680B /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
+		0FB87EA71D7479B600E1680B /* CCMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMBase64.h; sourceTree = "<group>"; };
+		0FB87EA81D7479B600E1680B /* CCMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMBase64.m; sourceTree = "<group>"; };
+		0FB87EA91D7479B600E1680B /* CCMCryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMCryptor.h; sourceTree = "<group>"; };
+		0FB87EAA1D7479B600E1680B /* CCMCryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMCryptor.m; sourceTree = "<group>"; };
+		0FB87EAB1D7479B600E1680B /* CCMKeyLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMKeyLoader.h; sourceTree = "<group>"; };
+		0FB87EAC1D7479B600E1680B /* CCMKeyLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMKeyLoader.m; sourceTree = "<group>"; };
+		0FB87EAD1D7479B600E1680B /* CCMPrivateKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMPrivateKey.h; sourceTree = "<group>"; };
+		0FB87EAE1D7479B600E1680B /* CCMPrivateKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMPrivateKey.m; sourceTree = "<group>"; };
+		0FB87EAF1D7479B600E1680B /* CCMPrivateKey_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMPrivateKey_internal.h; sourceTree = "<group>"; };
+		0FB87EB01D7479B600E1680B /* CCMPublicKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMPublicKey.h; sourceTree = "<group>"; };
+		0FB87EB11D7479B600E1680B /* CCMPublicKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMPublicKey.m; sourceTree = "<group>"; };
+		0FB87EB21D7479B600E1680B /* CCMPublicKey_internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMPublicKey_internal.h; sourceTree = "<group>"; };
+		0FB87EB31D7479B600E1680B /* CSSMRSACryptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CSSMRSACryptor.h; sourceTree = "<group>"; };
+		0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSMRSACryptor.m; sourceTree = "<group>"; };
+		0FB87EB51D7479B600E1680B /* LXLicenseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLicenseTool.h; sourceTree = "<group>"; };
+		0FB87EB61D7479B600E1680B /* LXLicenseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLicenseTool.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,12 +251,55 @@
 		0F0488BA1CE077FC00375563 /* License Control */ = {
 			isa = PBXGroup;
 			children = (
+				0FB87E9F1D7479B600E1680B /* AA3DES */,
+				0FB87EA61D7479B600E1680B /* CocoaCryptoMac */,
+				0FB87EB51D7479B600E1680B /* LXLicenseTool.h */,
+				0FB87EB61D7479B600E1680B /* LXLicenseTool.m */,
 				0F0488BB1CE077FC00375563 /* LXKeyChain.h */,
 				0F0488BC1CE077FC00375563 /* LXKeyChain.m */,
-				0F0488BD1CE077FC00375563 /* LXLicenseTool.h */,
-				0F0488BE1CE077FC00375563 /* LXLicenseTool.m */,
 			);
 			path = "License Control";
+			sourceTree = "<group>";
+		};
+		0FB87E9F1D7479B600E1680B /* AA3DES */ = {
+			isa = PBXGroup;
+			children = (
+				0FB87EA01D7479B600E1680B /* AA3DESManager.h */,
+				0FB87EA11D7479B600E1680B /* AA3DESManager.m */,
+				0FB87EA21D7479B600E1680B /* Base64 */,
+			);
+			path = AA3DES;
+			sourceTree = "<group>";
+		};
+		0FB87EA21D7479B600E1680B /* Base64 */ = {
+			isa = PBXGroup;
+			children = (
+				0FB87EA31D7479B600E1680B /* GTMBase64.h */,
+				0FB87EA41D7479B600E1680B /* GTMBase64.m */,
+				0FB87EA51D7479B600E1680B /* GTMDefines.h */,
+			);
+			path = Base64;
+			sourceTree = "<group>";
+		};
+		0FB87EA61D7479B600E1680B /* CocoaCryptoMac */ = {
+			isa = PBXGroup;
+			children = (
+				0FB87EA71D7479B600E1680B /* CCMBase64.h */,
+				0FB87EA81D7479B600E1680B /* CCMBase64.m */,
+				0FB87EA91D7479B600E1680B /* CCMCryptor.h */,
+				0FB87EAA1D7479B600E1680B /* CCMCryptor.m */,
+				0FB87EAB1D7479B600E1680B /* CCMKeyLoader.h */,
+				0FB87EAC1D7479B600E1680B /* CCMKeyLoader.m */,
+				0FB87EAD1D7479B600E1680B /* CCMPrivateKey.h */,
+				0FB87EAE1D7479B600E1680B /* CCMPrivateKey.m */,
+				0FB87EAF1D7479B600E1680B /* CCMPrivateKey_internal.h */,
+				0FB87EB01D7479B600E1680B /* CCMPublicKey.h */,
+				0FB87EB11D7479B600E1680B /* CCMPublicKey.m */,
+				0FB87EB21D7479B600E1680B /* CCMPublicKey_internal.h */,
+				0FB87EB31D7479B600E1680B /* CSSMRSACryptor.h */,
+				0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */,
+			);
+			path = CocoaCryptoMac;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -228,14 +309,25 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FB87EC01D7479B600E1680B /* CCMKeyLoader.h in Headers */,
 				0F0488C31CE07ABE00375563 /* LXTool.h in Headers */,
+				0FB87EB71D7479B600E1680B /* AA3DESManager.h in Headers */,
+				0FB87EC81D7479B600E1680B /* CSSMRSACryptor.h in Headers */,
+				0FB87EC71D7479B600E1680B /* CCMPublicKey_internal.h in Headers */,
+				0FB87EBB1D7479B600E1680B /* GTMDefines.h in Headers */,
+				0FB87EC21D7479B600E1680B /* CCMPrivateKey.h in Headers */,
 				0F0488A91CE0772D00375563 /* Utility.h in Headers */,
+				0FB87EBE1D7479B600E1680B /* CCMCryptor.h in Headers */,
+				0FB87EC41D7479B600E1680B /* CCMPrivateKey_internal.h in Headers */,
+				0FB87EBC1D7479B600E1680B /* CCMBase64.h in Headers */,
 				0F0488AD1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h in Headers */,
+				0FB87EB91D7479B600E1680B /* GTMBase64.h in Headers */,
+				0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */,
 				0F0488A71CE0772D00375563 /* ANSIUtility.h in Headers */,
 				0F0488B71CE0778300375563 /* NSObject+LXDict.h in Headers */,
 				0F0488BF1CE077FC00375563 /* LXKeyChain.h in Headers */,
-				0F0488C11CE077FC00375563 /* LXLicenseTool.h in Headers */,
 				0F0488B51CE0778300375563 /* LXIvar.h in Headers */,
+				0FB87EC51D7479B600E1680B /* CCMPublicKey.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,12 +428,20 @@
 			files = (
 				0F0488B61CE0778300375563 /* LXIvar.m in Sources */,
 				0F0488B81CE0778300375563 /* NSObject+LXDict.m in Sources */,
+				0FB87EBD1D7479B600E1680B /* CCMBase64.m in Sources */,
 				0F0488C01CE077FC00375563 /* LXKeyChain.m in Sources */,
+				0FB87EC11D7479B600E1680B /* CCMKeyLoader.m in Sources */,
 				0F0488851CE0762900375563 /* LXTool.m in Sources */,
+				0FB87EC61D7479B600E1680B /* CCMPublicKey.m in Sources */,
+				0FB87EC31D7479B600E1680B /* CCMPrivateKey.m in Sources */,
 				0F0488AA1CE0772D00375563 /* Utility.m in Sources */,
 				0F0488AE1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m in Sources */,
+				0FB87EC91D7479B600E1680B /* CSSMRSACryptor.m in Sources */,
+				0FB87EBF1D7479B600E1680B /* CCMCryptor.m in Sources */,
+				0FB87EB81D7479B600E1680B /* AA3DESManager.m in Sources */,
+				0FB87EBA1D7479B600E1680B /* GTMBase64.m in Sources */,
 				0F0488A81CE0772D00375563 /* ANSIUtility.m in Sources */,
-				0F0488C21CE077FC00375563 /* LXLicenseTool.m in Sources */,
+				0FB87ECB1D7479B600E1680B /* LXLicenseTool.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

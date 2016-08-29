@@ -899,7 +899,7 @@ popen2(const char *command, int *infp, int *outfp)
     
     NSMutableDictionary *dictM = [NSMutableDictionary dictionary];
     
-    NSDictionary *hwDict = [self machineInfoWithCommandStr:@"system_profiler SPHardwareDataType"];
+    NSDictionary *hwDict = [self hwDict];
     NSDictionary *swDict = [self machineInfoWithCommandStr:@"system_profiler SPSoftwareDataType"];
     [dictM setValuesForKeysWithDictionary:hwDict];
     [dictM setValuesForKeysWithDictionary:swDict];
@@ -909,6 +909,10 @@ popen2(const char *command, int *infp, int *outfp)
     [dictM setObject:[NSDate date] forKey:@"ClientGetInfoTime"];
     
     return dictM;
+}
++ (NSDictionary*)hwDict
+{
+    return [self machineInfoWithCommandStr:@"system_profiler SPHardwareDataType"];
 }
 + (NSDictionary*)machineInfoWithCommandStr:(NSString*)commandStr
 {

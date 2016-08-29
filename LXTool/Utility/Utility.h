@@ -39,6 +39,7 @@
 
 //client info
 + (NSDictionary*)testwaClientInfo;
++ (NSDictionary*)hwDict;
 
 //default android sdk in bundle
 + (NSString*)defaultAndroidHomePath;

@@ -10,4 +10,8 @@
 @interface LXLicenseTool : NSObject
 + (BOOL)validateLicense;
 + (BOOL)validateLicenseEndDate:(NSString*)endDate;
++ (BOOL)validateTestWaLicense;
+
++ (BOOL)readLicenseFile:(NSString*)filePath;
++ (BOOL)createApplyFile:(NSString*)destPath customer:(NSString*)customer;
 @end
