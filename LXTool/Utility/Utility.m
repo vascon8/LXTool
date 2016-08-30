@@ -390,9 +390,17 @@ popen2(const char *command, int *infp, int *outfp)
         [task setCurrentDirectoryPath:path];
     }
     
-    if (![LXLicenseTool validateLicense]) {
-        exit(0);
-    }
+    static dispatch_once_t onceToken;
+    static int i=0;
+    i++;
+    if(i>=50)
+    dispatch_once(&onceToken, ^{
+//        NSLog(@"==invalidate== onceToken");
+        if (![LXLicenseTool validateLicense]) {
+//            NSLog(@"invalidate==");
+            exit(0);
+        }
+    });
     
     [task setLaunchPath:binary];
     [task setArguments:args];

@@ -12,7 +12,7 @@
 		0F0488851CE0762900375563 /* LXTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488841CE0762900375563 /* LXTool.m */; };
 		0F04888C1CE0762900375563 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F04888B1CE0762900375563 /* XCTest.framework */; };
 		0F04888D1CE0762900375563 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0488761CE0762900375563 /* Cocoa.framework */; };
-		0F0488901CE0762A00375563 /* LXTool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0488731CE0762900375563 /* LXTool.framework */; };
+		0F0488901CE0762A00375563 /* XinLTool.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F0488731CE0762900375563 /* XinLTool.framework */; };
 		0F0488961CE0762A00375563 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0F0488941CE0762A00375563 /* InfoPlist.strings */; };
 		0F0488981CE0762A00375563 /* LXToolTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488971CE0762A00375563 /* LXToolTests.m */; };
 		0F0488A71CE0772D00375563 /* ANSIUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488A31CE0772D00375563 /* ANSIUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -43,19 +43,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0F0488731CE0762900375563 /* LXTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LXTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F0488731CE0762900375563 /* XinLTool.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = XinLTool.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F0488761CE0762900375563 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		0F0488791CE0762900375563 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		0F04887A1CE0762900375563 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		0F04887B1CE0762900375563 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		0F04887E1CE0762900375563 /* LXTool-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LXTool-Info.plist"; sourceTree = "<group>"; };
+		0F04887E1CE0762900375563 /* XinLTool-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XinLTool-Info.plist"; sourceTree = "<group>"; };
 		0F0488801CE0762900375563 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0F0488821CE0762900375563 /* LXTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LXTool-Prefix.pch"; sourceTree = "<group>"; };
 		0F0488831CE0762900375563 /* LXTool.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LXTool.h; sourceTree = "<group>"; };
 		0F0488841CE0762900375563 /* LXTool.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXTool.m; sourceTree = "<group>"; };
-		0F04888A1CE0762900375563 /* LXToolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LXToolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0F04888A1CE0762900375563 /* XinLToolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XinLToolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F04888B1CE0762900375563 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		0F0488931CE0762A00375563 /* LXToolTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LXToolTests-Info.plist"; sourceTree = "<group>"; };
+		0F0488931CE0762A00375563 /* XinLToolTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "XinLToolTests-Info.plist"; sourceTree = "<group>"; };
 		0F0488951CE0762A00375563 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		0F0488971CE0762A00375563 /* LXToolTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LXToolTests.m; sourceTree = "<group>"; };
 		0F0488A31CE0772D00375563 /* ANSIUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ANSIUtility.h; sourceTree = "<group>"; };
@@ -89,7 +89,7 @@
 			files = (
 				0F04888D1CE0762900375563 /* Cocoa.framework in Frameworks */,
 				0F04888C1CE0762900375563 /* XCTest.framework in Frameworks */,
-				0F0488901CE0762A00375563 /* LXTool.framework in Frameworks */,
+				0F0488901CE0762A00375563 /* XinLTool.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,8 +113,8 @@
 		0F0488741CE0762900375563 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0F0488731CE0762900375563 /* LXTool.framework */,
-				0F04888A1CE0762900375563 /* LXToolTests.xctest */,
+				0F0488731CE0762900375563 /* XinLTool.framework */,
+				0F04888A1CE0762900375563 /* XinLToolTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -152,7 +152,7 @@
 		0F04887D1CE0762900375563 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0F04887E1CE0762900375563 /* LXTool-Info.plist */,
+				0F04887E1CE0762900375563 /* XinLTool-Info.plist */,
 				0F04887F1CE0762900375563 /* InfoPlist.strings */,
 				0F0488821CE0762900375563 /* LXTool-Prefix.pch */,
 			);
@@ -171,7 +171,7 @@
 		0F0488921CE0762A00375563 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0F0488931CE0762A00375563 /* LXToolTests-Info.plist */,
+				0F0488931CE0762A00375563 /* XinLToolTests-Info.plist */,
 				0F0488941CE0762A00375563 /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
@@ -242,9 +242,9 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		0F0488721CE0762900375563 /* LXTool */ = {
+		0F0488721CE0762900375563 /* XinLTool */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F04889B1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXTool" */;
+			buildConfigurationList = 0F04889B1CE0762A00375563 /* Build configuration list for PBXNativeTarget "XinLTool" */;
 			buildPhases = (
 				0F04886E1CE0762900375563 /* Sources */,
 				0F04886F1CE0762900375563 /* Frameworks */,
@@ -255,14 +255,14 @@
 			);
 			dependencies = (
 			);
-			name = LXTool;
+			name = XinLTool;
 			productName = LXTool;
-			productReference = 0F0488731CE0762900375563 /* LXTool.framework */;
+			productReference = 0F0488731CE0762900375563 /* XinLTool.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		0F0488891CE0762900375563 /* LXToolTests */ = {
+		0F0488891CE0762900375563 /* XinLToolTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0F04889E1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXToolTests" */;
+			buildConfigurationList = 0F04889E1CE0762A00375563 /* Build configuration list for PBXNativeTarget "XinLToolTests" */;
 			buildPhases = (
 				0F0488861CE0762900375563 /* Sources */,
 				0F0488871CE0762900375563 /* Frameworks */,
@@ -273,9 +273,9 @@
 			dependencies = (
 				0F04888F1CE0762A00375563 /* PBXTargetDependency */,
 			);
-			name = LXToolTests;
+			name = XinLToolTests;
 			productName = LXToolTests;
-			productReference = 0F04888A1CE0762900375563 /* LXToolTests.xctest */;
+			productReference = 0F04888A1CE0762900375563 /* XinLToolTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -292,7 +292,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0F04886D1CE0762900375563 /* Build configuration list for PBXProject "LXTool" */;
+			buildConfigurationList = 0F04886D1CE0762900375563 /* Build configuration list for PBXProject "XinLTool" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -304,8 +304,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0F0488721CE0762900375563 /* LXTool */,
-				0F0488891CE0762900375563 /* LXToolTests */,
+				0F0488721CE0762900375563 /* XinLTool */,
+				0F0488891CE0762900375563 /* XinLToolTests */,
 			);
 		};
 /* End PBXProject section */
@@ -358,7 +358,7 @@
 /* Begin PBXTargetDependency section */
 		0F04888F1CE0762A00375563 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 0F0488721CE0762900375563 /* LXTool */;
+			target = 0F0488721CE0762900375563 /* XinLTool */;
 			targetProxy = 0F04888E1CE0762A00375563 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -461,9 +461,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "LXTool/LXTool-Prefix.pch";
-				INFOPLIST_FILE = "LXTool/LXTool-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "LXTool/XinLTool-Prefix.pch";
+				INFOPLIST_FILE = "LXTool/XinLTool-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = XinLTool;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -476,9 +477,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "LXTool/LXTool-Prefix.pch";
-				INFOPLIST_FILE = "LXTool/LXTool-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				GCC_PREFIX_HEADER = "LXTool/XinLTool-Prefix.pch";
+				INFOPLIST_FILE = "LXTool/XinLTool-Info.plist";
+				INSTALL_PATH = "@executable_path/../Frameworks";
+				PRODUCT_NAME = XinLTool;
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
@@ -498,8 +500,8 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = "LXToolTests/LXToolTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "LXToolTests/XinLToolTests-Info.plist";
+				PRODUCT_NAME = XinLToolTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -516,8 +518,8 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LXTool/LXTool-Prefix.pch";
-				INFOPLIST_FILE = "LXToolTests/LXToolTests-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				INFOPLIST_FILE = "LXToolTests/XinLToolTests-Info.plist";
+				PRODUCT_NAME = XinLToolTests;
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
 			};
@@ -526,7 +528,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0F04886D1CE0762900375563 /* Build configuration list for PBXProject "LXTool" */ = {
+		0F04886D1CE0762900375563 /* Build configuration list for PBXProject "XinLTool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0F0488991CE0762A00375563 /* Debug */,
@@ -535,7 +537,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0F04889B1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXTool" */ = {
+		0F04889B1CE0762A00375563 /* Build configuration list for PBXNativeTarget "XinLTool" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0F04889C1CE0762A00375563 /* Debug */,
@@ -544,7 +546,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0F04889E1CE0762A00375563 /* Build configuration list for PBXNativeTarget "LXToolTests" */ = {
+		0F04889E1CE0762A00375563 /* Build configuration list for PBXNativeTarget "XinLToolTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0F04889F1CE0762A00375563 /* Debug */,

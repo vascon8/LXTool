@@ -39,7 +39,7 @@
 //        NSModalResponse returnCode = [alert runModal];
 //
 //        if (returnCode == 1) {
-//            [[NSWorkspace sharedWorkspace]openURL:[NSURL URLWithString:TestWASyncCloudServer]];
+//            [[NSWorkspace sharedWorkspace]openURL:[NSURL URLWithString:@"www.testwa.cn"]];
 //        }
         
 		return NO;
@@ -49,7 +49,7 @@
 
 +(NSDate *)getInternetDate
 {
-    NSString *urlString = @"http://www.baidu.com2";
+    NSString *urlString = @"http://www.baidu.com";
 
     NSString *date = [self dateWithUrl:urlString];
     if (!date) {
