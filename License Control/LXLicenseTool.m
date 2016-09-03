@@ -217,7 +217,19 @@
 + (NSString*)expire
 {
     NSString *expire = [LXKeyChain genericPasswordForService:TestWaExpire account:TestWaAccount];
-    return expire;
+    
+    if (expire) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+        formatter.dateFormat = TestWaLicenseDateFormatter;
+        formatter.timeZone = [NSTimeZone systemTimeZone];
+        
+        NSDate *date = [formatter dateFromString:expire];
+        
+        formatter.dateFormat = @"yyyy-MM-dd";
+        
+        return [formatter stringFromDate:date];
+    }
+    else return nil;
 }
 + (BOOL)validateTestWaLicense
 {
@@ -496,7 +508,7 @@
     NSDictionary *dict = [Utility hwDict];
     if(dict[@"Hardware UUID"]) computerUuid = dict[@"Hardware UUID"];
     
-    NSString *digest = [NSString stringWithFormat:@"TestWA%@",computerUuid];
+    NSString *digest = [NSString stringWithFormat:@"%@%@",[self randFlag:@"testwa"],computerUuid];
     
     return [self MD5Digest:computerUuid];
 }
