@@ -14,4 +14,6 @@
 
 + (BOOL)readLicenseFile:(NSString*)filePath;
 + (BOOL)createApplyFile:(NSString*)destPath customer:(NSString*)customer;
+
++ (NSString*)expire;
 @end

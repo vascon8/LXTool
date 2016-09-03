@@ -47,7 +47,7 @@
 		0FB87EC71D7479B600E1680B /* CCMPublicKey_internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB21D7479B600E1680B /* CCMPublicKey_internal.h */; };
 		0FB87EC81D7479B600E1680B /* CSSMRSACryptor.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB31D7479B600E1680B /* CSSMRSACryptor.h */; };
 		0FB87EC91D7479B600E1680B /* CSSMRSACryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */; };
-		0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB51D7479B600E1680B /* LXLicenseTool.h */; };
+		0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB51D7479B600E1680B /* LXLicenseTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FB87ECB1D7479B600E1680B /* LXLicenseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB61D7479B600E1680B /* LXLicenseTool.m */; };
 /* End PBXBuildFile section */
 
@@ -315,6 +315,7 @@
 				0FB87EC81D7479B600E1680B /* CSSMRSACryptor.h in Headers */,
 				0FB87EC71D7479B600E1680B /* CCMPublicKey_internal.h in Headers */,
 				0FB87EBB1D7479B600E1680B /* GTMDefines.h in Headers */,
+				0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */,
 				0FB87EC21D7479B600E1680B /* CCMPrivateKey.h in Headers */,
 				0F0488A91CE0772D00375563 /* Utility.h in Headers */,
 				0FB87EBE1D7479B600E1680B /* CCMCryptor.h in Headers */,
@@ -322,7 +323,6 @@
 				0FB87EBC1D7479B600E1680B /* CCMBase64.h in Headers */,
 				0F0488AD1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h in Headers */,
 				0FB87EB91D7479B600E1680B /* GTMBase64.h in Headers */,
-				0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */,
 				0F0488A71CE0772D00375563 /* ANSIUtility.h in Headers */,
 				0F0488B71CE0778300375563 /* NSObject+LXDict.h in Headers */,
 				0F0488BF1CE077FC00375563 /* LXKeyChain.h in Headers */,

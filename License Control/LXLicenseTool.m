@@ -214,6 +214,11 @@
     return name;
 }
 #pragma mark - old
++ (NSString*)expire
+{
+    NSString *expire = [LXKeyChain genericPasswordForService:TestWaExpire account:TestWaAccount];
+    return expire;
+}
 + (BOOL)validateTestWaLicense
 {
     BOOL isSuccess = NO;
