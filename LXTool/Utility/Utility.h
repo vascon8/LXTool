@@ -11,6 +11,9 @@
 #define LXDefaultSDKPath @"Contents/Defaultandroid/android-sdk-macosx"
 #define LXDefaultAndroidSDKPath [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:LXDefaultSDKPath]
 
+#define TestWaDefaultMiniCapPath @"Contents/Vendor"
+#define TestWaDefaultAndroidMiniCapPath [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:TestWaDefaultMiniCapPath]
+
 @interface Utility : NSObject
 
 +(NSString*) pathToAndroidBinary:(NSString*)binaryName atSDKPath:(NSString*)sdkPath;
@@ -26,6 +29,17 @@
 //android device platform version
 + (NSString*)sdkVersionOfDevice:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath;
 + (NSString*)androidDeviceNameOfUdid:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath;
+
++ (BOOL)isAndroidSimulatorForUdid:(NSString*)udid sdkPath:(NSString*)sdkPath additional:(NSString*)addition;
+
+//minicap
++ (BOOL)deployMiniCapOfUdid:(NSString*)udid customSDKPath:(NSString*)sdkPath;
++ (NSString*)startMiniCapWithCustomSDKPath:(NSString*)sdkPath angel:(NSInteger)angel udid:(NSString*)udid isSuccess:(BOOL*)isSuccess;
++ (NSString*)killMinicapPidWithCustomSdkPath:(NSString*)sdkPath udid:(NSString*)udid isSuccess:(BOOL*)isSuccess;
++ (NSString*)forwardWithCustomSDKPath:(NSString*)sdkPath forwardPort:(NSNumber*)forwardPort isSuccess:(BOOL*)isSuccess udid:(NSString*)udid;
++ (NSString*)removeForwardWithCustomSDKPath:(NSString*)sdkPath forwardPort:(NSNumber*)forwardPort isSuccess:(BOOL*)isSuccess udid:(NSString*)udid;
++ (BOOL)forwardSuccessWithCustomSDKPath:(NSString*)sdkPath forwardName:(NSString*)forwardName udid:(NSString*)udid;
++ (NSArray*)allMinicapPidWithCustomSDKPath:(NSString*)sdkPath udid:(NSString*)udid isSuccess:(BOOL*)isSuccess;
 
 + (NSArray *)getiOSDevicesSuccess:(BOOL*)isSuccess;
 + (NSDictionary *)getiOSUDIDs;

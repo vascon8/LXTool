@@ -384,7 +384,7 @@ popen2(const char *command, int *infp, int *outfp)
 {
     BOOL isSystemDefaultPackage = NO;
     
-    if ([packageStr hasPrefix:@"com.android."] || [packageStr hasPrefix:@"com.sec."] || [packageStr hasPrefix:@"com.samsung.android."] || [packageStr hasPrefix:@"com.samsung.sec."] || [packageStr hasPrefix:@"com.sec."])
+    if ([packageStr hasPrefix:@"com.sec."] || [packageStr hasPrefix:@"com.samsung.android."] || [packageStr hasPrefix:@"com.samsung.sec."] || [packageStr hasPrefix:@"com.sec."])
         isSystemDefaultPackage = YES;
     
     return isSystemDefaultPackage;
@@ -456,6 +456,530 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     return deviceName;
+}
+//api version:adb shell "getprop ro.build.version.sdk"
++ (NSString*)apiVersionOfDevice:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath isSuccess:(BOOL*)isSuccess
+{
+    NSString *apiVersion = @"unknown";
+    
+    if(!androidBinaryPath) {
+        apiVersion = @"\nWarning:找不到adb!\n";
+        *isSuccess = NO;
+        return apiVersion;
+    }
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        *isSuccess = NO;
+        return @"failed";
+    }
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell getprop ro.build.version.sdk",udid];
+    //    NSLog(@"==commandS:%@",commandStr);
+    
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
+    if(result && result.length>1 && [result hasSuffix:@"\n"]) result = [result substringToIndex:result.length-1];
+    if(result && result.length>1 && [result hasSuffix:@"\r"]) result = [result substringToIndex:result.length-1];
+    NSLog(@"apiV:%@",result);
+    
+    if (isSuccess) {
+        apiVersion = result;
+    }
+    return apiVersion;
+}
+//adb shell wm size
++ (NSString*)sizeOfDevice:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath isSuccess:(BOOL*)isSuccess
+{
+    if(!androidBinaryPath) {
+        *isSuccess = NO;
+        return nil;
+    }
+    
+    if( !udid || udid.length<3) {
+        *isSuccess = NO;
+        return nil;
+    }
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell wm size",udid];
+    //    NSLog(@"==commandS:%@",commandStr);
+    
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
+    if(result && result.length>1 && [result hasSuffix:@"\n"]) result = [result substringToIndex:result.length-1];
+    if(result && result.length>1 && [result hasSuffix:@"\r"]) result = [result substringToIndex:result.length-1];
+    
+    if (isSuccess) {
+        NSRange range = [result rangeOfString:@"\\d{3,4}x\\d{3,4}" options:NSRegularExpressionSearch|NSBackwardsSearch];
+        if (range.location!=NSNotFound) {
+            result = [result substringWithRange:range];
+        }
+    }
+    
+    NSLog(@"sizeOFdE:%@",result);
+    return result;
+}
+//adb -s udid shell getprop
++ (BOOL)isAndroidSimulatorForUdid:(NSString*)udid sdkPath:(NSString*)sdkPath additional:(NSString*)addition
+{
+    if( !udid || udid.length<3 || !sdkPath || sdkPath.length == 0) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        return NO;
+    }
+    
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    if(!androidBinaryPath) {
+        return NO;
+    }
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell getprop ro.product.brand",udid];
+    //    NSLog(@"==commandS:%@",commandStr);
+    
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    BOOL isSuccess = NO;
+    
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
+    if(result && result.length>1 && [result hasSuffix:@"\n"]) result = [result substringToIndex:result.length-1];
+    if(result && result.length>1 && [result hasSuffix:@"\r"]) result = [result substringToIndex:result.length-1];
+    
+    BOOL isSimulaotr = NO;
+    if (result && [result isEqualToString:@"generic"]) {
+        isSimulaotr = YES;
+    }
+    NSLog(@"is android simulator:%d %@ %ld",isSimulaotr,result,result.length);
+    
+    return isSimulaotr;
+}
+#pragma mark - minicap
+#pragma mark start
++(NSString*)runMinicapTaskWithBinary:(NSString*)binary arguments:(NSArray*)args path:(NSString*)path
+{
+    NSTask *task = [NSTask new];
+    if (path != nil)
+    {
+        [task setCurrentDirectoryPath:path];
+    }
+    
+    [task setLaunchPath:binary];
+    [task setArguments:args];
+    //    [task setStandardInput:[NSPipe pipe]];
+    //    NSPipe *pipe = [NSPipe pipe];
+    //
+    //    [task setStandardError:pipe];
+    //    [task setStandardOutput:pipe];
+//    if (TestWA_DEBUG_LEVEL > 0)
+//    {
+//        NSLog(@"Launching %@", binary);
+//    }
+    [task launch];
+    //    [task waitUntilExit];
+    //    NSFileHandle *stdOutHandle = [pipe fileHandleForReading];
+    //    NSData *data = [stdOutHandle availableData];
+    //    [stdOutHandle closeFile];
+    //    NSString *output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
+    
+//    if (TestWA_DEBUG_LEVEL > 1)
+//    {
+//        //        NSLog(@"%@ exited with output: %@", binary, output);
+//    }
+    return @"finish";
+}
++ (NSString*)runMinicapTaskInDefaultShellWithCommandStr:(NSString*)commandStr isSuccess:(BOOL*)isSuccess path:(NSString*)path
+{
+    NSDictionary *envDict = [[NSProcessInfo processInfo]environment];
+    NSString *shellStr = [envDict objectForKey:@"SHELL"];
+    //    NSLog(@"dict:%@,sell:%@",envDict,shellStr);
+    
+    commandStr = [NSString stringWithFormat:@"%@;echo $?",commandStr];
+    
+    NSString *resultStr = [Utility runMinicapTaskWithBinary:shellStr arguments:@[@"-l",@"-c",commandStr] path:path];
+    
+    if (isSuccess) {
+        if([resultStr hasSuffix:@"\n0\n"]) *isSuccess = YES;
+        else *isSuccess = NO;
+    }
+    
+    //        NSLog(@"==command:%@,result:%@",commandStr,resultStr);
+    
+    NSRange range = [resultStr rangeOfString:@"\n\\d{1,}\n" options:NSRegularExpressionSearch|NSBackwardsSearch];
+    if(resultStr.length>=2 && range.location!=NSNotFound) resultStr = [resultStr substringToIndex:resultStr.length-(range.length-1)];
+    //    NSLog(@"==after result:%@,range:%@",resultStr,NSStringFromRange(range));
+    
+    return resultStr;
+}
++ (BOOL)deployMiniCapOfUdid:(NSString*)udid customSDKPath:(NSString*)sdkPath
+{
+    if (!udid || udid.length == 0 || !sdkPath || sdkPath.length == 0) {
+        return NO;
+    }
+    
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    if(!androidBinaryPath) {
+        return NO;
+    }
+    
+    if (!udid || udid.length<2 || !androidBinaryPath || androidBinaryPath.length<2) {
+        return NO;
+    }
+    
+    BOOL isKillSU = NO;
+    [self killMinicapPidWithCustomSdkPath:sdkPath udid:udid isSuccess:&isKillSU];
+    
+    BOOL apiSuccess = NO;
+    NSString *api = [self apiVersionOfDevice:udid androidBinaryPath:androidBinaryPath isSuccess:&apiSuccess];
+    if (!apiSuccess || !api || api.length == 0) {
+        return NO;
+    }
+    
+    NSString *abi = [self checkAbiAtAndroidBinaryPath:androidBinaryPath udid:udid];
+    if (abi && abi.length>1) {
+        BOOL isSuccess = [self checkDeviceMiniCapFilesOfAbi:abi sdk:api];
+        if (isSuccess) {
+            isSuccess = [self pushMiniCapForUdid:udid abi:abi androidBinaryPath:androidBinaryPath deviceSDK:api];
+            return isSuccess;
+        }
+    }
+    
+    return  NO;
+}
++ (NSString*)miniCapPathOfAbi:(NSString*)abi
+{
+    NSString *minicapPath = [NSString stringWithFormat:@"%@/bin/%@/minicap",TestWaDefaultAndroidMiniCapPath,abi];
+    NSLog(@"miniCapPath:%@",minicapPath);
+    return minicapPath;
+}
++ (NSString*)miniCapSoPathofAbi:(NSString*)abi sdk:(NSString*)sdk
+{
+    NSString *minicapsoPath = [NSString stringWithFormat:@"%@/shared/android-%@/%@/minicap.so",TestWaDefaultAndroidMiniCapPath,sdk,abi];
+    NSLog(@"miniSOP:%@",minicapsoPath);
+    return minicapsoPath;
+}
++ (NSString*)miniCapPiePathofAbi:(NSString*)abi
+{
+    NSString *minicapPiePath = [NSString stringWithFormat:@"%@/bin/%@/minicap-nopie",TestWaDefaultAndroidMiniCapPath,abi];
+    NSLog(@"piePath:%@",minicapPiePath);
+    return minicapPiePath;
+}
++ (BOOL)checkDeviceMiniCapFilesOfAbi:(NSString*)abi sdk:(NSString*)sdk
+{
+    BOOL fileExist = NO;
+    
+    fileExist = ([[NSFileManager defaultManager]fileExistsAtPath:[self miniCapPathOfAbi:abi]] && [[NSFileManager defaultManager]fileExistsAtPath:[self miniCapSoPathofAbi:abi sdk:sdk]]);
+    if (fileExist && [sdk integerValue] < 16) {
+        fileExist = [[NSFileManager defaultManager]fileExistsAtPath:[self miniCapPiePathofAbi:abi]];
+    }
+    NSLog(@"fileE:%d",fileExist);
+    return fileExist;
+}
+//adb shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P 1080x1920@1080x1920/0 -t
++ (BOOL)checkIfDevice:(NSString*)udid supportMiniCap:(NSString*)width height:(NSString*)height androidBinaryPath:(NSString*)androidBinaryPath angel:(NSInteger)angel
+{
+    if(!androidBinaryPath) {
+        return NO;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        return NO;
+    }
+    
+    BOOL isSuccess = NO;
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P %@x%@@%@x%@/%ld -t",udid,width,height,width,height,angel];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
+    NSLog(@"support result:%@ %@",udid,result);
+    
+    return  isSuccess;
+}
+//froward:adb forward tcp:1313 localabstract:minicap
++ (NSString*)forwardWithCustomSDKPath:(NSString*)sdkPath forwardPort:(NSNumber*)forwardPort isSuccess:(BOOL*)isSuccess udid:(NSString*)udid
+{
+    if (!udid || udid.length == 0 || !sdkPath || sdkPath.length == 0) {
+        *isSuccess = NO;
+        return nil;
+    }
+    
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    if(!androidBinaryPath) {
+        *isSuccess = NO;
+        return nil;
+    }
+    
+    if(!androidBinaryPath) {
+        *isSuccess = NO;
+        return nil;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' forward tcp:%@ localabstract:minicap",udid,forwardPort];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:nil path:androidBinaryPath];
+    NSLog(@"forward %@",result);
+    //becz forward command never send out err
+    *isSuccess = YES;
+    
+    return  result;
+}
+//remove foreard
+//adb -s udid forward --remove tcp:1313
++ (NSString*)removeForwardWithCustomSDKPath:(NSString*)sdkPath forwardPort:(NSNumber*)forwardPort isSuccess:(BOOL*)isSuccess udid:(NSString*)udid
+{
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    return [self removeForwardWithAndroidBinaryPath:androidBinaryPath forwardPort:forwardPort isSuccess:isSuccess udid:udid];
+}
++ (NSString*)removeForwardWithAndroidBinaryPath:(NSString*)androidBinaryPath forwardPort:(NSNumber*)forwardPort isSuccess:(BOOL*)isSuccess udid:(NSString*)udid
+{
+    if (!udid || udid.length == 0) {
+        *isSuccess = NO;
+        return nil;
+    }
+    
+    if(!androidBinaryPath) {
+        *isSuccess = NO;
+        return nil;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' forward --remove tcp:%@",udid,forwardPort];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:nil path:androidBinaryPath];
+    NSLog(@"remove forward %@",result);
+    //becz forward command never send out err
+    *isSuccess = YES;
+    
+    return  result;
+}
+//adb -s udid forward --list|grep "minicap\>"
++ (BOOL)forwardSuccessWithCustomSDKPath:(NSString*)sdkPath forwardName:(NSString*)forwardName udid:(NSString*)udid
+{
+    if (!udid || udid.length == 0 || !sdkPath || sdkPath.length == 0) {
+        return NO;
+    }
+    
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    if(!androidBinaryPath) {
+        return NO;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' --list | grep \"minicap\\>\"",udid];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:nil path:androidBinaryPath];
+    
+    NSLog(@"forwardSuccessResult:%@",result);
+    
+    BOOL isSu = (result && result.length>0) ? YES : NO;
+    
+    return  isSu;
+}
+//adb -s udid shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P 1080x1920@1080x1920/0
++ (NSString*)startMiniCapWithCustomSDKPath:(NSString*)sdkPath angel:(NSInteger)angel udid:(NSString*)udid isSuccess:(BOOL*)isSuccess
+{
+    if(!sdkPath || sdkPath.length == 0) {
+        *isSuccess = NO;
+        return nil;
+    }
+    
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    
+    if(!androidBinaryPath) {
+        *isSuccess = NO;
+        return nil;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        *isSuccess = NO;
+        return nil;
+    }
+    
+    NSString *sizeStr = [self sizeOfDevice:udid androidBinaryPath:androidBinaryPath isSuccess:isSuccess];
+    if(*isSuccess) {
+        NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P %@@%@/%ld",udid,sizeStr,sizeStr,angel];
+        NSLog(@"commandstr:%@",commandStr);
+        NSString *result = [self runMinicapTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
+        *isSuccess = YES;
+        NSLog(@"start minicap result:%@ %@",udid,result);
+        return result;
+    }
+    
+    return  nil;
+}
+//kill minicap:adb shell kill 12352
++ (NSString*)killMinicapPidWithCustomSdkPath:(NSString*)sdkPath udid:(NSString*)udid isSuccess:(BOOL*)isSuccess
+{
+    if (!udid || udid.length == 0 || !sdkPath || sdkPath.length == 0) {
+        if(isSuccess) *isSuccess = NO;
+        return nil;
+    }
+    
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    if(!androidBinaryPath) {
+        if(isSuccess) *isSuccess = NO;
+        return nil;
+    }
+    
+    if(!androidBinaryPath) {
+        if(isSuccess) *isSuccess = NO;
+        return nil;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        if(isSuccess) *isSuccess = NO;
+        return nil;
+    }
+    
+    NSArray *pidArr = [self allMinicapPidWithAndroidBinaryPath:androidBinaryPath udid:udid isSuccess:isSuccess];
+    NSString *result;
+    
+    if (pidArr && pidArr.count>0) {
+        for (NSNumber *pid in pidArr) {
+            BOOL isRemoveForwardSuccess;
+            [self removeForwardWithAndroidBinaryPath:androidBinaryPath forwardPort:[NSNumber numberWithInteger:1313] isSuccess:&isRemoveForwardSuccess udid:udid];
+            
+            NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell kill '%@'",udid,pid];
+            BOOL isS = NO;
+            result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isS path:androidBinaryPath];
+            
+            if (!isS) {
+                *isSuccess = isS;
+            }
+            NSLog(@"kill pid minicap result:%@ %@",udid,result);
+        }
+    }
+    
+    return  result;
+}
++ (NSArray*)allMinicapPidWithCustomSDKPath:(NSString*)sdkPath udid:(NSString*)udid isSuccess:(BOOL*)isSuccess
+{
+    NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
+    if(!androidBinaryPath) {
+        if(isSuccess) *isSuccess = NO;
+        return nil;
+    }
+    
+    return [self allMinicapPidWithAndroidBinaryPath:androidBinaryPath udid:udid isSuccess:isSuccess];
+}
++ (NSArray*)allMinicapPidWithAndroidBinaryPath:(NSString*)androidBinaryPath udid:(NSString*)udid isSuccess:(BOOL*)isSuccess
+{
+    if(!androidBinaryPath) {
+        *isSuccess = NO;
+        return nil;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        *isSuccess = NO;
+        return nil;
+    }
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell ps|grep minicap* | awk {'print $2'}",udid];
+    
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
+    if(result && result.length>1 && [result hasPrefix:@"\n"]) result = [result substringToIndex:result.length-1];
+    if(result && result.length>1 && [result hasPrefix:@"\r"]) result = [result substringToIndex:result.length-1];
+    
+    NSLog(@"==pid result:%@",result);
+    
+    NSMutableArray *arrM;
+    if (*isSuccess && result && result.length>0) {
+        NSArray *pidArr = [result componentsSeparatedByString:@"\n"];
+        if (pidArr && pidArr.count>0) {
+            arrM = [NSMutableArray array];
+            for (NSString *pidStr in pidArr) {
+                if (pidStr && pidStr.length>0) {
+                    [arrM addObject:[NSNumber numberWithInteger:[pidStr integerValue]]];
+                }
+            }
+        }
+    }
+    
+    NSLog(@"pid arrM:%@",arrM);
+    
+    return  arrM;
+}
+//adb -s udid shell ps|grep minicap*
++ (NSNumber*)minicapPidWithAndroidBinaryPath:(NSString*)androidBinaryPath udid:(NSString*)udid isSuccess:(BOOL*)isSuccess
+{
+    if(!androidBinaryPath) {
+        *isSuccess = NO;
+        return nil;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        *isSuccess = NO;
+        return nil;
+    }
+    NSNumber *pid;
+    NSArray *arr = [self allMinicapPidWithAndroidBinaryPath:androidBinaryPath udid:udid isSuccess:isSuccess];
+    if (arr) {
+        pid = [arr firstObject];
+    }
+    
+    return  pid;
+}
+//Push minicap
+//adb push libs/$ABI/minicap /data/local/tmp/
+//adb push jni/minicap-shared/aosp/libs/android-$SDK/$ABI/minicap.so /data/local/tmp/
++ (BOOL)pushMiniCapForUdid:(NSString*)udid abi:(NSString*)abi androidBinaryPath:(NSString*)androidBinaryPath deviceSDK:(NSString*)sdk
+{
+    if(!androidBinaryPath) {
+        return NO;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        return NO;
+    }
+    
+    BOOL isSuccess = NO;
+    NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' push %@ /data/local/tmp/",udid,[self miniCapPathOfAbi:abi]];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
+    
+    NSLog(@"push minicap:%@",result);
+    
+    if (isSuccess) {
+        NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' push %@ /data/local/tmp/",udid,[self miniCapSoPathofAbi:abi sdk:sdk]];
+        result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
+        NSLog(@"push minicapso:%@",result);
+    }
+    
+    NSInteger sdkN = [sdk integerValue];
+    if (sdkN < 16 && isSuccess) {
+        //Note that for SDK <16, you will have to use the minicap-nopie
+        //adb push jni/minicap-shared/aosp/libs/android-$SDK/$ABI/minicap.so /data/local/tmp/
+        commandStr = [NSString stringWithFormat:@"./adb -s '%@' push %@ /data/local/tmp/",udid,[self miniCapPiePathofAbi:abi]];
+        result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
+        NSLog(@"push nopie:%@",result);
+    }
+    
+    return  isSuccess;
+}
+//ABI:adb -s b15d91f shell getprop ro.product.cpu.abi | tr -d '\r'
++ (NSString*)checkAbiAtAndroidBinaryPath:(NSString*)androidBinaryPath udid:(NSString*)udid
+{
+    if(!androidBinaryPath) {
+        return nil;
+    }
+    if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
+    
+    if( !udid || udid.length<3) {
+        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        return nil;
+    }
+    
+    BOOL isSuccess = NO;
+    NSString *abiCommand = [NSString stringWithFormat:@"./adb -s '%@' shell getprop ro.product.cpu.abi | tr -d '\r'",udid];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:abiCommand isSuccess:&isSuccess path:androidBinaryPath];
+    if(result && [result hasSuffix:@"\n"]) result = [result substringToIndex:result.length-1];
+    NSLog(@"checkAbi:%@",result);
+    
+    return  result;
 }
 #pragma mark - run method
 +(NSString*)runTaskWithBinary:(NSString*)binary arguments:(NSArray*)args path:(NSString*)path
