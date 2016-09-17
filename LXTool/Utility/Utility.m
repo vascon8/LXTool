@@ -647,19 +647,19 @@ popen2(const char *command, int *infp, int *outfp)
 + (NSString*)miniCapPathOfAbi:(NSString*)abi
 {
     NSString *minicapPath = [NSString stringWithFormat:@"%@/bin/%@/minicap",TestWaDefaultAndroidMiniCapPath,abi];
-    NSLog(@"miniCapPath:%@",minicapPath);
+//    NSLog(@"miniCapPath:%@",minicapPath);
     return minicapPath;
 }
 + (NSString*)miniCapSoPathofAbi:(NSString*)abi sdk:(NSString*)sdk
 {
     NSString *minicapsoPath = [NSString stringWithFormat:@"%@/shared/android-%@/%@/minicap.so",TestWaDefaultAndroidMiniCapPath,sdk,abi];
-    NSLog(@"miniSOP:%@",minicapsoPath);
+//    NSLog(@"miniSOP:%@",minicapsoPath);
     return minicapsoPath;
 }
 + (NSString*)miniCapPiePathofAbi:(NSString*)abi
 {
     NSString *minicapPiePath = [NSString stringWithFormat:@"%@/bin/%@/minicap-nopie",TestWaDefaultAndroidMiniCapPath,abi];
-    NSLog(@"piePath:%@",minicapPiePath);
+//    NSLog(@"piePath:%@",minicapPiePath);
     return minicapPiePath;
 }
 + (BOOL)checkDeviceMiniCapFilesOfAbi:(NSString*)abi sdk:(NSString*)sdk
@@ -670,7 +670,7 @@ popen2(const char *command, int *infp, int *outfp)
     if (fileExist && [sdk integerValue] < 16) {
         fileExist = [[NSFileManager defaultManager]fileExistsAtPath:[self miniCapPiePathofAbi:abi]];
     }
-    NSLog(@"fileE:%d",fileExist);
+//    NSLog(@"fileE:%d",fileExist);
     return fileExist;
 }
 //adb shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P 1080x1920@1080x1920/0 -t
@@ -715,7 +715,7 @@ popen2(const char *command, int *infp, int *outfp)
     
     NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' forward tcp:%@ localabstract:minicap",udid,forwardPort];
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:nil path:androidBinaryPath];
-    NSLog(@"forward %@",result);
+//    NSLog(@"forward %@",result);
     //becz forward command never send out err
     *isSuccess = YES;
     
@@ -743,7 +743,7 @@ popen2(const char *command, int *infp, int *outfp)
     
     NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' forward --remove tcp:%@",udid,forwardPort];
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:nil path:androidBinaryPath];
-    NSLog(@"remove forward %@",result);
+//    NSLog(@"remove forward %@",result);
     //becz forward command never send out err
     *isSuccess = YES;
     
@@ -765,7 +765,7 @@ popen2(const char *command, int *infp, int *outfp)
     NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' --list | grep \"minicap\\>\"",udid];
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:nil path:androidBinaryPath];
     
-    NSLog(@"forwardSuccessResult:%@",result);
+//    NSLog(@"forwardSuccessResult:%@",result);
     
     BOOL isSu = (result && result.length>0) ? YES : NO;
     
@@ -796,10 +796,10 @@ popen2(const char *command, int *infp, int *outfp)
     NSString *sizeStr = [self sizeOfDevice:udid androidBinaryPath:androidBinaryPath isSuccess:isSuccess];
     if(*isSuccess) {
         NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P %@@%@/%ld",udid,sizeStr,sizeStr,angel];
-        NSLog(@"commandstr:%@",commandStr);
+//        NSLog(@"commandstr:%@",commandStr);
         NSString *result = [self runMinicapTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
         *isSuccess = YES;
-        NSLog(@"start minicap result:%@ %@",udid,result);
+//        NSLog(@"start minicap result:%@ %@",udid,result);
         return result;
     }
     
@@ -846,7 +846,7 @@ popen2(const char *command, int *infp, int *outfp)
             if (!isS) {
                 *isSuccess = isS;
             }
-            NSLog(@"kill pid minicap result:%@ %@",udid,result);
+//            NSLog(@"kill pid minicap result:%@ %@",udid,result);
         }
     }
     
@@ -881,7 +881,7 @@ popen2(const char *command, int *infp, int *outfp)
     if(result && result.length>1 && [result hasPrefix:@"\n"]) result = [result substringToIndex:result.length-1];
     if(result && result.length>1 && [result hasPrefix:@"\r"]) result = [result substringToIndex:result.length-1];
     
-    NSLog(@"==pid result:%@",result);
+//    NSLog(@"==pid result:%@",result);
     
     NSMutableArray *arrM;
     if (*isSuccess && result && result.length>0) {
@@ -896,7 +896,7 @@ popen2(const char *command, int *infp, int *outfp)
         }
     }
     
-    NSLog(@"pid arrM:%@",arrM);
+//    NSLog(@"pid arrM:%@",arrM);
     
     return  arrM;
 }
@@ -941,12 +941,12 @@ popen2(const char *command, int *infp, int *outfp)
     NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' push %@ /data/local/tmp/",udid,[self miniCapPathOfAbi:abi]];
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
     
-    NSLog(@"push minicap:%@",result);
+//    NSLog(@"push minicap:%@",result);
     
     if (isSuccess) {
         NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' push %@ /data/local/tmp/",udid,[self miniCapSoPathofAbi:abi sdk:sdk]];
         result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
-        NSLog(@"push minicapso:%@",result);
+//        NSLog(@"push minicapso:%@",result);
     }
     
     NSInteger sdkN = [sdk integerValue];
@@ -955,7 +955,7 @@ popen2(const char *command, int *infp, int *outfp)
         //adb push jni/minicap-shared/aosp/libs/android-$SDK/$ABI/minicap.so /data/local/tmp/
         commandStr = [NSString stringWithFormat:@"./adb -s '%@' push %@ /data/local/tmp/",udid,[self miniCapPiePathofAbi:abi]];
         result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
-        NSLog(@"push nopie:%@",result);
+//        NSLog(@"push nopie:%@",result);
     }
     
     return  isSuccess;
@@ -977,7 +977,7 @@ popen2(const char *command, int *infp, int *outfp)
     NSString *abiCommand = [NSString stringWithFormat:@"./adb -s '%@' shell getprop ro.product.cpu.abi | tr -d '\r'",udid];
     NSString *result = [self runTaskInDefaultShellWithCommandStr:abiCommand isSuccess:&isSuccess path:androidBinaryPath];
     if(result && [result hasSuffix:@"\n"]) result = [result substringToIndex:result.length-1];
-    NSLog(@"checkAbi:%@",result);
+//    NSLog(@"checkAbi:%@",result);
     
     return  result;
 }
