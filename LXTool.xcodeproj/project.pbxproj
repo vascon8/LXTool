@@ -49,6 +49,24 @@
 		0FB87EC91D7479B600E1680B /* CSSMRSACryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */; };
 		0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB51D7479B600E1680B /* LXLicenseTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FB87ECB1D7479B600E1680B /* LXLicenseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB61D7479B600E1680B /* LXLicenseTool.m */; };
+		0FD48CF91DB34E4000B76114 /* FBErrorBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48CEE1DB34E4000B76114 /* FBErrorBuilder.h */; };
+		0FD48CFA1DB34E4000B76114 /* FBErrorBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48CEF1DB34E4000B76114 /* FBErrorBuilder.m */; };
+		0FD48CFD1DB34E4000B76114 /* TestAAgentServerRequestCommands.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48CF21DB34E4000B76114 /* TestAAgentServerRequestCommands.h */; };
+		0FD48CFE1DB34E4000B76114 /* TestAAgentServerRequestCommands.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48CF31DB34E4000B76114 /* TestAAgentServerRequestCommands.m */; };
+		0FD48CFF1DB34E4000B76114 /* TestAAgentTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48CF41DB34E4000B76114 /* TestAAgentTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FD48D001DB34E4000B76114 /* TestAAgentTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48CF51DB34E4000B76114 /* TestAAgentTool.m */; };
+		0FD48D011DB34E4000B76114 /* TestAElementTypeTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48CF61DB34E4000B76114 /* TestAElementTypeTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FD48D021DB34E4000B76114 /* TestAElementTypeTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48CF71DB34E4000B76114 /* TestAElementTypeTransformer.m */; };
+		0FD48D031DB34E4000B76114 /* TestWaAgentGeneral.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48CF81DB34E4000B76114 /* TestWaAgentGeneral.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FD48D0E1DB34E4F00B76114 /* Peertalk.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48D051DB34E4F00B76114 /* Peertalk.h */; };
+		0FD48D0F1DB34E4F00B76114 /* prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48D061DB34E4F00B76114 /* prefix.pch */; };
+		0FD48D101DB34E4F00B76114 /* PTChannel.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48D071DB34E4F00B76114 /* PTChannel.h */; };
+		0FD48D111DB34E4F00B76114 /* PTChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48D081DB34E4F00B76114 /* PTChannel.m */; };
+		0FD48D121DB34E4F00B76114 /* PTPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48D091DB34E4F00B76114 /* PTPrivate.h */; };
+		0FD48D131DB34E4F00B76114 /* PTProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48D0A1DB34E4F00B76114 /* PTProtocol.h */; };
+		0FD48D141DB34E4F00B76114 /* PTProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48D0B1DB34E4F00B76114 /* PTProtocol.m */; };
+		0FD48D151DB34E4F00B76114 /* PTUSBHub.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48D0C1DB34E4F00B76114 /* PTUSBHub.h */; };
+		0FD48D161DB34E4F00B76114 /* PTUSBHub.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48D0D1DB34E4F00B76114 /* PTUSBHub.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,6 +128,24 @@
 		0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSMRSACryptor.m; sourceTree = "<group>"; };
 		0FB87EB51D7479B600E1680B /* LXLicenseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLicenseTool.h; sourceTree = "<group>"; };
 		0FB87EB61D7479B600E1680B /* LXLicenseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLicenseTool.m; sourceTree = "<group>"; };
+		0FD48CEE1DB34E4000B76114 /* FBErrorBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBErrorBuilder.h; sourceTree = "<group>"; };
+		0FD48CEF1DB34E4000B76114 /* FBErrorBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBErrorBuilder.m; sourceTree = "<group>"; };
+		0FD48CF21DB34E4000B76114 /* TestAAgentServerRequestCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAAgentServerRequestCommands.h; sourceTree = "<group>"; };
+		0FD48CF31DB34E4000B76114 /* TestAAgentServerRequestCommands.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAAgentServerRequestCommands.m; sourceTree = "<group>"; };
+		0FD48CF41DB34E4000B76114 /* TestAAgentTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAAgentTool.h; sourceTree = "<group>"; };
+		0FD48CF51DB34E4000B76114 /* TestAAgentTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAAgentTool.m; sourceTree = "<group>"; };
+		0FD48CF61DB34E4000B76114 /* TestAElementTypeTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAElementTypeTransformer.h; sourceTree = "<group>"; };
+		0FD48CF71DB34E4000B76114 /* TestAElementTypeTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAElementTypeTransformer.m; sourceTree = "<group>"; };
+		0FD48CF81DB34E4000B76114 /* TestWaAgentGeneral.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestWaAgentGeneral.h; sourceTree = "<group>"; };
+		0FD48D051DB34E4F00B76114 /* Peertalk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Peertalk.h; sourceTree = "<group>"; };
+		0FD48D061DB34E4F00B76114 /* prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prefix.pch; sourceTree = "<group>"; };
+		0FD48D071DB34E4F00B76114 /* PTChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTChannel.h; sourceTree = "<group>"; };
+		0FD48D081DB34E4F00B76114 /* PTChannel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTChannel.m; sourceTree = "<group>"; };
+		0FD48D091DB34E4F00B76114 /* PTPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTPrivate.h; sourceTree = "<group>"; };
+		0FD48D0A1DB34E4F00B76114 /* PTProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTProtocol.h; sourceTree = "<group>"; };
+		0FD48D0B1DB34E4F00B76114 /* PTProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTProtocol.m; sourceTree = "<group>"; };
+		0FD48D0C1DB34E4F00B76114 /* PTUSBHub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PTUSBHub.h; sourceTree = "<group>"; };
+		0FD48D0D1DB34E4F00B76114 /* PTUSBHub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PTUSBHub.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +173,7 @@
 		0F0488691CE0762900375563 = {
 			isa = PBXGroup;
 			children = (
+				0FD48CED1DB34E4000B76114 /* Agent */,
 				0F0488BA1CE077FC00375563 /* License Control */,
 				0F0488AF1CE0778300375563 /* LXDictObject */,
 				0F0488A21CE0764B00375563 /* Ext */,
@@ -302,6 +339,39 @@
 			path = CocoaCryptoMac;
 			sourceTree = "<group>";
 		};
+		0FD48CED1DB34E4000B76114 /* Agent */ = {
+			isa = PBXGroup;
+			children = (
+				0FD48D041DB34E4F00B76114 /* PeerTalk */,
+				0FD48CEE1DB34E4000B76114 /* FBErrorBuilder.h */,
+				0FD48CEF1DB34E4000B76114 /* FBErrorBuilder.m */,
+				0FD48CF21DB34E4000B76114 /* TestAAgentServerRequestCommands.h */,
+				0FD48CF31DB34E4000B76114 /* TestAAgentServerRequestCommands.m */,
+				0FD48CF41DB34E4000B76114 /* TestAAgentTool.h */,
+				0FD48CF51DB34E4000B76114 /* TestAAgentTool.m */,
+				0FD48CF61DB34E4000B76114 /* TestAElementTypeTransformer.h */,
+				0FD48CF71DB34E4000B76114 /* TestAElementTypeTransformer.m */,
+				0FD48CF81DB34E4000B76114 /* TestWaAgentGeneral.h */,
+			);
+			path = Agent;
+			sourceTree = "<group>";
+		};
+		0FD48D041DB34E4F00B76114 /* PeerTalk */ = {
+			isa = PBXGroup;
+			children = (
+				0FD48D051DB34E4F00B76114 /* Peertalk.h */,
+				0FD48D061DB34E4F00B76114 /* prefix.pch */,
+				0FD48D071DB34E4F00B76114 /* PTChannel.h */,
+				0FD48D081DB34E4F00B76114 /* PTChannel.m */,
+				0FD48D091DB34E4F00B76114 /* PTPrivate.h */,
+				0FD48D0A1DB34E4F00B76114 /* PTProtocol.h */,
+				0FD48D0B1DB34E4F00B76114 /* PTProtocol.m */,
+				0FD48D0C1DB34E4F00B76114 /* PTUSBHub.h */,
+				0FD48D0D1DB34E4F00B76114 /* PTUSBHub.m */,
+			);
+			path = PeerTalk;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -313,21 +383,32 @@
 				0F0488C31CE07ABE00375563 /* LXTool.h in Headers */,
 				0FB87EB71D7479B600E1680B /* AA3DESManager.h in Headers */,
 				0FB87EC81D7479B600E1680B /* CSSMRSACryptor.h in Headers */,
+				0FD48D131DB34E4F00B76114 /* PTProtocol.h in Headers */,
 				0FB87EC71D7479B600E1680B /* CCMPublicKey_internal.h in Headers */,
 				0FB87EBB1D7479B600E1680B /* GTMDefines.h in Headers */,
+				0FD48CFF1DB34E4000B76114 /* TestAAgentTool.h in Headers */,
+				0FD48D031DB34E4000B76114 /* TestWaAgentGeneral.h in Headers */,
+				0FD48D011DB34E4000B76114 /* TestAElementTypeTransformer.h in Headers */,
 				0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */,
 				0FB87EC21D7479B600E1680B /* CCMPrivateKey.h in Headers */,
 				0F0488A91CE0772D00375563 /* Utility.h in Headers */,
 				0FB87EBE1D7479B600E1680B /* CCMCryptor.h in Headers */,
+				0FD48D0E1DB34E4F00B76114 /* Peertalk.h in Headers */,
 				0FB87EC41D7479B600E1680B /* CCMPrivateKey_internal.h in Headers */,
 				0FB87EBC1D7479B600E1680B /* CCMBase64.h in Headers */,
+				0FD48D151DB34E4F00B76114 /* PTUSBHub.h in Headers */,
+				0FD48D0F1DB34E4F00B76114 /* prefix.pch in Headers */,
 				0F0488AD1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h in Headers */,
 				0FB87EB91D7479B600E1680B /* GTMBase64.h in Headers */,
 				0F0488A71CE0772D00375563 /* ANSIUtility.h in Headers */,
+				0FD48CFD1DB34E4000B76114 /* TestAAgentServerRequestCommands.h in Headers */,
 				0F0488B71CE0778300375563 /* NSObject+LXDict.h in Headers */,
 				0F0488BF1CE077FC00375563 /* LXKeyChain.h in Headers */,
 				0F0488B51CE0778300375563 /* LXIvar.h in Headers */,
+				0FD48D121DB34E4F00B76114 /* PTPrivate.h in Headers */,
 				0FB87EC51D7479B600E1680B /* CCMPublicKey.h in Headers */,
+				0FD48D101DB34E4F00B76114 /* PTChannel.h in Headers */,
+				0FD48CF91DB34E4000B76114 /* FBErrorBuilder.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -431,15 +512,22 @@
 				0FB87EBD1D7479B600E1680B /* CCMBase64.m in Sources */,
 				0F0488C01CE077FC00375563 /* LXKeyChain.m in Sources */,
 				0FB87EC11D7479B600E1680B /* CCMKeyLoader.m in Sources */,
+				0FD48D021DB34E4000B76114 /* TestAElementTypeTransformer.m in Sources */,
 				0F0488851CE0762900375563 /* LXTool.m in Sources */,
 				0FB87EC61D7479B600E1680B /* CCMPublicKey.m in Sources */,
 				0FB87EC31D7479B600E1680B /* CCMPrivateKey.m in Sources */,
+				0FD48D111DB34E4F00B76114 /* PTChannel.m in Sources */,
+				0FD48D161DB34E4F00B76114 /* PTUSBHub.m in Sources */,
 				0F0488AA1CE0772D00375563 /* Utility.m in Sources */,
 				0F0488AE1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m in Sources */,
+				0FD48CFE1DB34E4000B76114 /* TestAAgentServerRequestCommands.m in Sources */,
+				0FD48CFA1DB34E4000B76114 /* FBErrorBuilder.m in Sources */,
+				0FD48D141DB34E4F00B76114 /* PTProtocol.m in Sources */,
 				0FB87EC91D7479B600E1680B /* CSSMRSACryptor.m in Sources */,
 				0FB87EBF1D7479B600E1680B /* CCMCryptor.m in Sources */,
 				0FB87EB81D7479B600E1680B /* AA3DESManager.m in Sources */,
 				0FB87EBA1D7479B600E1680B /* GTMBase64.m in Sources */,
+				0FD48D001DB34E4000B76114 /* TestAAgentTool.m in Sources */,
 				0F0488A81CE0772D00375563 /* ANSIUtility.m in Sources */,
 				0FB87ECB1D7479B600E1680B /* LXLicenseTool.m in Sources */,
 			);

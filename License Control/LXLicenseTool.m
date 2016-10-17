@@ -26,7 +26,7 @@
 
 #import "LXKeyChain.h"
 
-#define TestWALicenseValue_EndDate @"2016-12-20 23:59:59 +0800"
+#define TestWALicenseValue_EndDate @"2017-04-20 23:59:59 +0800"
 #define TestWaLicenseDateFormatter @"yyyy-MM-dd HH:mm:ss Z"
 
 #define TestWaFlag @"TestWaFlag"
@@ -294,7 +294,7 @@
 	
     NSInteger hour = [self getAllHour:expireDate endDate:currentDate];
 	
-    NSLog(@"cur:%@,expire:%@,hour:%ld",currentDate,expireDate,hour);
+//    NSLog(@"cur:%@,expire:%@,hour:%ld",currentDate,expireDate,hour);
     
 	if (hour>0) {
         
@@ -499,6 +499,7 @@
     NSString *computerUuid;
     NSDictionary *dict = [Utility hwDict];
     if(dict[@"Hardware UUID"]) computerUuid = dict[@"Hardware UUID"];
+    else computerUuid = @"No Udid found,maybe authorization problem";
     
     return computerUuid;
 }
@@ -507,6 +508,15 @@
     NSString *computerUuid;
     NSDictionary *dict = [Utility hwDict];
     if(dict[@"Hardware UUID"]) computerUuid = dict[@"Hardware UUID"];
+    else {
+        computerUuid = @"No Udid found,maybe authorization problem";
+        
+        NSAlert *alert = [NSAlert new];
+        [alert setMessageText:computerUuid];
+        [alert setInformativeText:@"授权出错，无法获取系统信息，请确认当前用户的权限!"];
+        
+        [alert runModal];
+    }
     
     NSString *digest = [NSString stringWithFormat:@"%@%@",[self randFlag:@"testwa"],computerUuid];
     

@@ -49,6 +49,7 @@
 
 + (NSString *)getXcodeVersionisSuccess:(BOOL*)isSuccess;
 + (NSNumber *)xcodeFirstNumber;
++ (NSNumber *)xcodeVerNumber;
 +(NSString*)defaultXcodePathSuccess:(BOOL*)isSuccess;
 
 //client info

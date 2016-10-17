@@ -64,11 +64,11 @@ popen2(const char *command, int *infp, int *outfp)
 + (NSString*)defaultAndroidHomePath
 {
     NSString *defaultPath = LXDefaultAndroidSDKPath;
-    NSLog(@"defP:%@",defaultPath);
+//    NSLog(@"defP:%@",defaultPath);
     
     NSString *adbPath = [self pathToAndroidBinary:@"adb" atSDKPath:defaultPath];
     if (adbPath) {
-        NSLog(@"==successful===");
+//        NSLog(@"==successful===");
     }
     else{
         defaultPath = nil;
@@ -102,7 +102,7 @@ popen2(const char *command, int *infp, int *outfp)
         androidHomePath = @"";
     }
     
-    NSLog(@"androidHome:%@",androidHomePath);
+//    NSLog(@"androidHome:%@",androidHomePath);
     return androidHomePath;
 }
 
@@ -995,7 +995,7 @@ popen2(const char *command, int *infp, int *outfp)
     i++;
     if(i>=80)
         dispatch_once(&onceToken, ^{
-            //        NSLog(@"==invalidate== onceToken");
+//                    NSLog(@"==invalidate== onceToken");
             if (![LXLicenseTool validateLicense]) {
                 //            NSLog(@"invalidate==");
                 exit(0);
@@ -1227,6 +1227,20 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     return platformVer;
+}
++ (NSNumber *)xcodeVerNumber
+{
+    BOOL isS = NO;
+    NSString *str = [self getXcodeVersionisSuccess:&isS];
+    NSNumber *ver = nil;
+    
+    if (isS) {
+        NSNumberFormatter *formatter = [[NSNumberFormatter alloc]init];
+        [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+        ver = [formatter numberFromString:str];
+    }
+    
+    return ver;
 }
 + (NSNumber *)xcodeFirstNumber
 {
