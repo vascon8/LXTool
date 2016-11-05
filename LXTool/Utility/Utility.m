@@ -989,6 +989,13 @@ popen2(const char *command, int *infp, int *outfp)
     {
         [task setCurrentDirectoryPath:path];
     }
+    else{
+        NSString *homeDir = NSHomeDirectory();
+        if ([[NSFileManager defaultManager]fileExistsAtPath:homeDir]) {
+            [task setCurrentDirectoryPath:NSHomeDirectory()];
+            //            NSLog(@"=use home:%@",homeDir);
+        }
+    }
     
     static dispatch_once_t onceToken;
     static int i=0;
@@ -1016,6 +1023,16 @@ popen2(const char *command, int *infp, int *outfp)
     [stdOutHandle closeFile];
     NSString *output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     
+    
+//    if (output && args) {
+//        for (id value in args) {
+//            NSLog(@"==value:%@",value);
+//            if ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"whoami;system_profiler SPHardwareDataType;echo $?"]) {
+//                [output writeToFile:@"/tmp/abc.log" atomically:YES encoding:NSUTF8StringEncoding error:nil];
+//            }
+//        }
+//        
+//    }
 
     return output;
 }
@@ -1028,6 +1045,9 @@ popen2(const char *command, int *infp, int *outfp)
 {
     NSDictionary *envDict = [[NSProcessInfo processInfo]environment];
     NSString *shellStr = [envDict objectForKey:@"SHELL"];
+    if (!shellStr || shellStr.length < 2 || [shellStr containsString:@"\n"]) {
+        shellStr = @"/bin/bash";
+    }
     //    NSLog(@"dict:%@,sell:%@",envDict,shellStr);
     
     commandStr = [NSString stringWithFormat:@"%@;echo $?",commandStr];
@@ -1051,6 +1071,9 @@ popen2(const char *command, int *infp, int *outfp)
 {
     NSDictionary *envDict = [[NSProcessInfo processInfo]environment];
     NSString *shellStr = [envDict objectForKey:@"SHELL"];
+    if (!shellStr || shellStr.length < 2 || [shellStr containsString:@"\n"]) {
+        shellStr = @"/bin/bash";
+    }
     //    NSLog(@"dict:%@,sell:%@",envDict,shellStr);
     
     commandStr = [NSString stringWithFormat:@"%@;echo $?",commandStr];
@@ -1161,29 +1184,44 @@ popen2(const char *command, int *infp, int *outfp)
 }
 + (NSDictionary*)getBundlesWithUdid:(NSString*)udid isSuccess:(BOOL*)isSuccess
 {
-    NSString *bundleString = [NSString stringWithFormat:@"ideviceinstaller -l -o list_user --udid %@",udid];
-    NSString *result = [self runTaskInDefaultShellWithCommandStr:bundleString isSuccess:isSuccess];
+    //    NSString *bundleString = [NSString stringWithFormat:@"ideviceinstaller -l -o list_user --udid %@",udid];
+    NSString *path = [[NSBundle mainBundle]resourcePath];
+    path = [path stringByAppendingPathComponent:@"node_modules/testwa/node_modules/appium-xcuitest-driver/node_modules/deploy"];
+    if(![[NSFileManager defaultManager]fileExistsAtPath:path]) return nil;
+    
+    NSString *bundleString = [NSString stringWithFormat:@"./ios-deploy -i %@ -B|grep -v com.apple",udid];
+    NSString *result = [self runTaskInDefaultShellWithCommandStr:bundleString isSuccess:isSuccess path:path];
+//    NSLog(@"result:%@",result);
     NSMutableDictionary *bundleDict;
     
     if (*isSuccess) {
         NSMutableArray *bundles = [NSMutableArray arrayWithArray:[result componentsSeparatedByString:@"\n"]];
         
         if(bundles && bundles.count>0) [bundles removeObjectAtIndex:0];
+        if(bundles && bundles.count>0) [bundles removeObjectAtIndex:0];
         
-        NSString *pattern = @" - ";
-        NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+        //        NSString *pattern = @" - ";
+        //        NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
+        //        bundleDict = [NSMutableDictionary dictionary];
+        //
+        //        for (NSString *name in bundles) {
+        //            NSTextCheckingResult *match = [regular firstMatchInString:name options:0 range:NSMakeRange(0, name.length)];
+        //            if (match) {
+        //                NSString *bundleid = [name substringToIndex:match.range.location];
+        //                [bundleDict setObject:bundleid forKey:name];
+        //            }
+        //        }
+        
         bundleDict = [NSMutableDictionary dictionary];
         
         for (NSString *name in bundles) {
-            NSTextCheckingResult *match = [regular firstMatchInString:name options:0 range:NSMakeRange(0, name.length)];
-            if (match) {
-                NSString *bundleid = [name substringToIndex:match.range.location];
-                [bundleDict setObject:bundleid forKey:name];
+            if (name && name.length>0) {
+                [bundleDict setObject:name forKey:name];
             }
         }
     }
     
-    //     NSLog(@"bundles:%@,dict:%@",bundles,bundleDict);
+//    NSLog(@"bundles:dict:%@",bundleDict);
     
     return bundleDict;
 }
@@ -1474,5 +1512,35 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     return hwDict;
+}
+#pragma mark - angle
++ (float)angleOfStartPoint:(NSPoint)startPoint endPoint:(NSPoint)endPoint
+{
+    int x = startPoint.x;
+    int y = startPoint.y;
+    float dx = endPoint.x - x;
+    float dy = endPoint.y - y;
+    CGFloat radians = atan2(dy,dx); // in radians
+    CGFloat degrees = radians * 180 / M_PI; // in degrees
+    
+    if (degrees < 0) return fabs(degrees);
+    else return 360 - degrees;
+}
+
++ (NSString*)directionForAngle:(float)angle
+{
+    if (angle >= 0 && angle < 45) {
+        return @"left";
+    } else if (angle >= 45 && angle < 135) {
+        return @"down";
+    } else if (angle >= 135 && angle < 225) {
+        return @"right";
+    } else if (angle >= 225 && angle < 315) {
+        return @"up";
+    } else if (angle >= 315 && angle < 360) {
+        return @"left";
+    } else {
+        return @"left";
+    }
 }
 @end

@@ -70,4 +70,8 @@
 + (NSString*)downloadApk:(NSString*)apkPath fromAndroidDevice:(NSString*)udid savePath:(NSString*)savePath androidBinaryPath:(NSString*)androidBinaryPath isDownloadSuccess:(BOOL*)isDownloadSuccess;
 
 + (void)refreshAndroidActivity:(NSMutableArray**)activityArr package:(NSMutableArray**)packageArr app:(NSString*)appPath customSDKPath:(NSString*)customSDKPath;
+
+#pragma mark - angle
++ (float)angleOfStartPoint:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
++ (NSString*)directionForAngle:(float)angle;
 @end
