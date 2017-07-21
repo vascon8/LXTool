@@ -26,7 +26,7 @@
 
 #import "LXKeyChain.h"
 
-#define TestWALicenseValue_EndDate @"2017-04-20 23:59:59 +0800"
+#define TestWALicenseValue_EndDate @"2017-10-30 23:59:59 +0800"
 #define TestWaLicenseDateFormatter @"yyyy-MM-dd HH:mm:ss Z"
 
 #define TestWaFlag @"TestWaFlag"

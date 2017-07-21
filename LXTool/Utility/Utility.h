@@ -34,7 +34,7 @@
 
 //minicap
 + (BOOL)deployMiniCapOfUdid:(NSString*)udid customSDKPath:(NSString*)sdkPath;
-+ (NSString*)startMiniCapWithCustomSDKPath:(NSString*)sdkPath angel:(NSInteger)angel udid:(NSString*)udid isSuccess:(BOOL*)isSuccess;
++ (NSString*)startMiniCapWithCustomSDKPath:(NSString*)sdkPath angel:(NSInteger)angel udid:(NSString*)udid isSuccess:(BOOL*)isSuccess interval:(unsigned int)interval;
 + (NSString*)killMinicapPidWithCustomSdkPath:(NSString*)sdkPath udid:(NSString*)udid isSuccess:(BOOL*)isSuccess;
 + (NSString*)forwardWithCustomSDKPath:(NSString*)sdkPath forwardPort:(NSNumber*)forwardPort isSuccess:(BOOL*)isSuccess udid:(NSString*)udid;
 + (NSString*)removeForwardWithCustomSDKPath:(NSString*)sdkPath forwardPort:(NSNumber*)forwardPort isSuccess:(BOOL*)isSuccess udid:(NSString*)udid;
@@ -71,7 +71,11 @@
 
 + (void)refreshAndroidActivity:(NSMutableArray**)activityArr package:(NSMutableArray**)packageArr app:(NSString*)appPath customSDKPath:(NSString*)customSDKPath;
 
+#pragma mark - compare xcode VS ios sdk
++ (BOOL)compareXCodeBigOrEqualiOSSDKWithDeviceStr:(NSString*)deviceStr deviceSDK:(NSString**)dSDK xcSDK:(NSString**)xSDK;
+
 #pragma mark - angle
 + (float)angleOfStartPoint:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
 + (NSString*)directionForAngle:(float)angle;
++ (NSString*)directionString:(NSString*)direction;
 @end

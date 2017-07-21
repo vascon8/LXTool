@@ -18,6 +18,8 @@ if (object && ![object isKindOfClass:aClass]) { \
 return; \
 }
 
+static TestAAgentTool *sharedInstance=nil;
+
 @interface TestAAgentTool ()<PTChannelDelegate>{
     // If the remote connection is over USB transport...
     NSNumber *connectingToDeviceID_;
@@ -30,6 +32,9 @@ return; \
     BOOL notConnectedQueueSuspended_;
     PTChannel *connectedChannel_;
     NSMutableDictionary *pings_;
+    
+    id observer;
+    id detachObserver;
 }
 @property (readonly) NSNumber *connectedDeviceID;
 @property PTChannel *connectedChannel;
@@ -38,6 +43,7 @@ return; \
 @property TestAAgentUSBResponseCompletion autoRefreshSourceCompletionBlock;
 
 @property (nonatomic, copy, readonly) NSMutableDictionary<NSString *, TestAAgentUSBResponseCompletion> *uuidToCallbackMap;
+@property (nonatomic, copy, readonly) NSMutableDictionary<NSString *, NSDictionary*> *udidToDeviceidMap;
 
 - (void)startListeningForDevices;
 - (void)didDisconnectFromDevice:(NSNumber*)deviceID;
@@ -54,45 +60,69 @@ return; \
 @end
 
 @implementation TestAAgentTool
-- (instancetype)initdelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
+//- (instancetype)initdelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
+//{
+//    if ([self init]) {
+//        self.receivedImgBlock = receiveImgBlock;
+//        self.receivedSourceBlock = receivedSourceBlock;
+//        self.delegate = delegate;
+//    }
+//    return self;
+//}
+//- (instancetype)initWithDevice:(NSString *)deviceUdid delegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
+//{
+//    if ([self initdelegate:delegate receiveImgBlock:receiveImgBlock receivedSourceBlock:receivedSourceBlock]) {
+//        _deviceUdid = deviceUdid;
+//        [self startListeningForDevices];
+//    }
+//    return self;
+//}
+- (instancetype)connectToDevice:(NSString *)deviceUdid delegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
 {
-    if ([self init]) {
-        self.receivedImgBlock = receiveImgBlock;
-        self.receivedSourceBlock = receivedSourceBlock;
-        self.delegate = delegate;
-    }
-    return self;
-}
-- (instancetype)initWithDevice:(NSString *)deviceUdid delegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
-{
-    if ([self initdelegate:delegate receiveImgBlock:receiveImgBlock receivedSourceBlock:receivedSourceBlock]) {
-        _deviceUdid = deviceUdid;
-        [self startListeningForDevices];
-    }
-    return self;
-}
-- (instancetype)initWithSimulatorAndDelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
-{
-    if ([self initdelegate:delegate receiveImgBlock:receiveImgBlock receivedSourceBlock:receivedSourceBlock]) {
-        _deviceUdid = @"simulator";
-        [self enqueueConnectToLocalIPv4Port];
-    }
-    return self;
-}
-- (instancetype)init
-{
-    if (self = [super init]) {
-        _uuidToCallbackMap = [NSMutableDictionary dictionary];
-        
-        // We use a serial queue that we toggle depending on if we are connected or
-        // not. When we are not connected to a peer, the queue is running to handle
-        // "connect" tries. When we are connected to a peer, the queue is suspended
-        // thus no longer trying to connect.
-        notConnectedQueue_ = dispatch_queue_create("TestWaAgent.notConnectedQueue", DISPATCH_QUEUE_SERIAL);
+    _deviceUdid = deviceUdid;
+    [self attachDelegate:delegate receiveImgBlock:receiveImgBlock receivedSourceBlock:receivedSourceBlock];
+    if (self.udidToDeviceidMap && [self.udidToDeviceidMap.allKeys containsObject:deviceUdid]) {
+        [self connectToDeviceWithUserinfo:self.udidToDeviceidMap[deviceUdid]];
     }
     
-    return self;
+    return sharedInstance;
 }
+- (instancetype)connectToSimulatorWithDelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
+{
+    [self attachDelegate:delegate receiveImgBlock:receiveImgBlock receivedSourceBlock:receivedSourceBlock];
+    _deviceUdid = @"simulator";
+    [self enqueueConnectToLocalIPv4Port];
+    
+    return sharedInstance;
+}
+- (void)attachDelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
+{
+    self.receivedSourceBlock = receivedSourceBlock;
+    self.receivedImgBlock = receiveImgBlock;
+    self.delegate = delegate;
+}
+//- (instancetype)initWithSimulatorAndDelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock
+//{
+//    if ([self initdelegate:delegate receiveImgBlock:receiveImgBlock receivedSourceBlock:receivedSourceBlock]) {
+//        _deviceUdid = @"simulator";
+//        [self enqueueConnectToLocalIPv4Port];
+//    }
+//    return self;
+//}
+//- (instancetype)init
+//{
+//    if (self = [super init]) {
+//        _uuidToCallbackMap = [NSMutableDictionary dictionary];
+//
+//        // We use a serial queue that we toggle depending on if we are connected or
+//        // not. When we are not connected to a peer, the queue is running to handle
+//        // "connect" tries. When we are connected to a peer, the queue is suspended
+//        // thus no longer trying to connect.
+//        notConnectedQueue_ = dispatch_queue_create("TestWaAgent.notConnectedQueue", DISPATCH_QUEUE_SERIAL);
+//    }
+//
+//    return self;
+//}
 
 - (PTChannel*)connectedChannel {
     return connectedChannel_;
@@ -102,17 +132,17 @@ return; \
     connectedChannel_ = connectedChannel;
     
     // Toggle the notConnectedQueue_ depending on if we are connected or not
-//    if (!connectedChannel_ && notConnectedQueueSuspended_) {
-//        dispatch_resume(notConnectedQueue_);
-//        notConnectedQueueSuspended_ = NO;
-//    } else if (connectedChannel_ && !notConnectedQueueSuspended_) {
-//        dispatch_suspend(notConnectedQueue_);
-//        notConnectedQueueSuspended_ = YES;
-//    }
+    //    if (!connectedChannel_ && notConnectedQueueSuspended_) {
+    //        dispatch_resume(notConnectedQueue_);
+    //        notConnectedQueueSuspended_ = NO;
+    //    } else if (connectedChannel_ && !notConnectedQueueSuspended_) {
+    //        dispatch_suspend(notConnectedQueue_);
+    //        notConnectedQueueSuspended_ = YES;
+    //    }
     
-    if (!connectedChannel_ && connectingToDeviceID_) {
-        [self enqueueConnectToUSBDevice];
-    }
+    //    if (!connectedChannel_ && connectingToDeviceID_) {
+    //        [self enqueueConnectToUSBDevice];
+    //    }
     
     if (!self.sessionID && connectedChannel) {
         [self getSession:nil];
@@ -120,50 +150,46 @@ return; \
 }
 - (BOOL)ready{return connectedChannel_!=nil && self.sessionID!=nil;}
 #pragma mark - Wired device connections
+- (void)disconnectAgent
+{
+    [self disconnectFromCurrentChannel];
+    connectedChannel_ = nil;
+    
+    connectedDeviceID_ = nil;
+    connectingToDeviceID_ = nil;
+    connectedDeviceProperties_ = nil;
+    
+    _deviceUdid = nil;
+    self.receivedImgBlock = nil;
+    self.receivedSourceBlock = nil;
+    
+    self.refreshSource = NO;
+    self.refreshScreenshot = NO;
+    _sessionID = nil;
+    
+    self.delegate = nil;
+}
 - (void)deallocAgent
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    connectedChannel_ = nil;
-    _deviceUdid = nil;
-//    NSLog(@"==dealloc agent");
+    [[NSNotificationCenter defaultCenter] removeObserver:observer];
+    [[NSNotificationCenter defaultCenter] removeObserver:detachObserver];
+    observer = nil;
+    detachObserver = nil;
+    
+    NSLog(@"==dealloc agent");
 }
 - (void)startListeningForDevices {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
-    [nc addObserverForName:PTUSBDeviceDidAttachNotification object:PTUSBHub.sharedHub queue:nil usingBlock:^(NSNotification *note) {
-        NSNumber *deviceID = [note.userInfo objectForKey:@"DeviceID"];
-        NSString *serialNumber;
-        if (note && note.userInfo && [note.userInfo.allKeys containsObject:@"Properties"]) {
-            NSDictionary *properDict = [note.userInfo objectForKey:@"Properties"];
-            if (properDict && [properDict isKindOfClass:[NSDictionary class]] && [properDict.allKeys containsObject:@"SerialNumber"]) {
-                serialNumber = properDict[@"SerialNumber"];
-            }
-        }
-        
-//        NSLog(@"PTUSBDeviceDidAttachNotification: %@", note.userInfo);
-//        NSLog(@"PTUSBDeviceDidAttachNotification: %@", deviceID);
-        
-        dispatch_async(notConnectedQueue_, ^{
-            if (_deviceUdid && serialNumber && serialNumber == _deviceUdid && connectedDeviceID_ != deviceID && connectingToDeviceID_ != deviceID) {
-                [self disconnectFromCurrentChannel];
-                connectingToDeviceID_ = deviceID;
-                connectedDeviceProperties_ = [note.userInfo objectForKey:@"Properties"];
-                [self enqueueConnectToUSBDevice];
-            }
-            
-//            if (!connectingToDeviceID_ || ![deviceID isEqualToNumber:connectingToDeviceID_]) {
-//                [self disconnectFromCurrentChannel];
-//                connectingToDeviceID_ = deviceID;
-//                connectedDeviceProperties_ = [note.userInfo objectForKey:@"Properties"];
-//                [self enqueueConnectToUSBDevice];
-//            }
-        });
+    observer = [nc addObserverForName:PTUSBDeviceDidAttachNotification object:PTUSBHub.sharedHub queue:nil usingBlock:^(NSNotification *note) {
+        NSLog(@"PTUSBDeviceDidAttachNotification: %@", note.userInfo);
+        [self connectToDeviceWithUserinfo:note.userInfo];
     }];
     
-    [nc addObserverForName:PTUSBDeviceDidDetachNotification object:PTUSBHub.sharedHub queue:nil usingBlock:^(NSNotification *note) {
+    detachObserver = [nc addObserverForName:PTUSBDeviceDidDetachNotification object:PTUSBHub.sharedHub queue:nil usingBlock:^(NSNotification *note) {
         NSNumber *deviceID = [note.userInfo objectForKey:@"DeviceID"];
         //NSLog(@"PTUSBDeviceDidDetachNotification: %@", note.userInfo);
-//        NSLog(@"PTUSBDeviceDidDetachNotification: %@", deviceID);
+        NSLog(@"PTUSBDeviceDidDetachNotification: %@", deviceID);
         
         if ([connectingToDeviceID_ isEqualToNumber:deviceID]) {
             connectedDeviceProperties_ = nil;
@@ -172,10 +198,49 @@ return; \
                 [connectedChannel_ close];
             }
         }
+        
+        NSString *serialNumber;
+        if (note.userInfo  && [note.userInfo.allKeys containsObject:@"Properties"]) {
+            NSDictionary *properDict = [note.userInfo objectForKey:@"Properties"];
+            if (properDict && [properDict isKindOfClass:[NSDictionary class]] && [properDict.allKeys containsObject:@"SerialNumber"]) {
+                serialNumber = properDict[@"SerialNumber"];
+            }
+        }
+        
+        if(serialNumber && _udidToDeviceidMap && [_udidToDeviceidMap.allKeys containsObject:serialNumber]) [_udidToDeviceidMap removeObjectForKey:serialNumber];
     }];
 }
+- (void)connectToDeviceWithUserinfo:(NSDictionary*)userinfo
+{
+    NSNumber *deviceID = [userinfo objectForKey:@"DeviceID"];
+    NSString *serialNumber;
+    if (userinfo  && [userinfo.allKeys containsObject:@"Properties"]) {
+        NSDictionary *properDict = [userinfo objectForKey:@"Properties"];
+        if (properDict && [properDict isKindOfClass:[NSDictionary class]] && [properDict.allKeys containsObject:@"SerialNumber"]) {
+            serialNumber = properDict[@"SerialNumber"];
+        }
+    }
+    
+    if(serialNumber && _udidToDeviceidMap && ![_udidToDeviceidMap.allKeys containsObject:serialNumber]) [_udidToDeviceidMap setObject:userinfo forKey:serialNumber];
+    
+    dispatch_async(notConnectedQueue_, ^{
+        if (_deviceUdid && serialNumber && [serialNumber isEqualToString:_deviceUdid] && connectedDeviceID_ != deviceID && connectingToDeviceID_ != deviceID) {
+            [self disconnectFromCurrentChannel];
+            connectingToDeviceID_ = deviceID;
+            connectedDeviceProperties_ = [userinfo objectForKey:@"Properties"];
+            [self enqueueConnectToUSBDevice];
+        }
+        
+        //            if (!connectingToDeviceID_ || ![deviceID isEqualToNumber:connectingToDeviceID_]) {
+        //                [self disconnectFromCurrentChannel];
+        //                connectingToDeviceID_ = deviceID;
+        //                connectedDeviceProperties_ = [note.userInfo objectForKey:@"Properties"];
+        //                [self enqueueConnectToUSBDevice];
+        //            }
+    });
+}
 - (void)didDisconnectFromDevice:(NSNumber*)deviceID {
-//    NSLog(@"Disconnected from device");
+    NSLog(@"Disconnected from device");
     if ([connectedDeviceID_ isEqualToNumber:deviceID]) {
         [self willChangeValueForKey:@"connectedDeviceID"];
         connectedDeviceID_ = nil;
@@ -214,16 +279,11 @@ return; \
             if (channel.userInfo == connectingToDeviceID_) {
                 [self performSelector:@selector(enqueueConnectToUSBDevice) withObject:nil afterDelay:TestWaAgentReconnectDelay];
             }
-//            if (self.timer) {
-//                [self.timer invalidate];
-//            }
+            
         } else {
             connectedDeviceID_ = connectingToDeviceID_;
             self.connectedChannel = channel;
             
-//            if (self.timer) {
-//                [self.timer fire];
-//            }
         }
     }];
 }
@@ -251,9 +311,9 @@ return; \
             self.connectedChannel = channel;
             channel.userInfo = address;
             
-//            NSLog(@"Connected to %@", address);
+            NSLog(@"Connected to %@", address);
         }
-//        if(self && _deviceUdid) [self performSelector:@selector(enqueueConnectToLocalIPv4Port) withObject:nil afterDelay:TestWaAgentReconnectDelay];
+        //        if(self && _deviceUdid) [self performSelector:@selector(enqueueConnectToLocalIPv4Port) withObject:nil afterDelay:TestWaAgentReconnectDelay];
     }];
 }
 #pragma mark - ping test
@@ -304,14 +364,14 @@ return; \
     }
 }
 - (void)ioFrameChannel:(PTChannel*)channel didReceiveFrameOfType:(uint32_t)type tag:(uint32_t)tag payload:(PTData*)payload {
-//    dispatch_async(dispatch_get_main_queue(), ^{
-        [self dispatchioFrameChannel:channel didReceiveFrameOfType:type tag:tag payload:payload];
-//    });
-
+    //    dispatch_async(dispatch_get_main_queue(), ^{
+    [self dispatchioFrameChannel:channel didReceiveFrameOfType:type tag:tag payload:payload];
+    //    });
+    
 }
 - (void)dispatchioFrameChannel:(PTChannel*)channel didReceiveFrameOfType:(uint32_t)type tag:(uint32_t)tag payload:(PTData*)payload
 {
-//    NSLog(@"received %@, %u, %u, %@ thread:%@", channel, type, tag, payload,[NSThread currentThread]);
+    //    NSLog(@"received %@, %u, %u, %@ thread:%@", channel, type, tag, payload,[NSThread currentThread]);
     NSData *resData = [NSData dataWithContentsOfDispatchData:payload.dispatchData];
     BOOL success = YES;
     NSError *innerError;
@@ -325,7 +385,7 @@ return; \
     else if (type == TestWaAgentFrameTypeHttpTalk){
         
         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:&innerError];
-//        NSLog(@"=res from iphone");
+        NSLog(@"=res from iphone");
         
         if (innerError) {
             success = NO;
@@ -391,7 +451,7 @@ return; \
     else if (type == TestWaAgentFrameTypeUsbTalk || type == TestWaAgentFrameTypeUsbScreenshotTalk || type == TestWaAgentFrameTypeUsbSourceTalk){
         
         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:&innerError];
-//                        NSLog(@"=res from iphone:%@",response);
+        //                        NSLog(@"=res from iphone:%@",response);
         if (innerError) {
             success = NO;
             NSLog(@"innerE:%@,res:%@",innerError,response);
@@ -434,10 +494,10 @@ return; \
     }
     
     if (tag == TestWaAgentTagServerAnalyReqError || tag == TestWaAgentTagServerAnalyRouteResError || tag == TestWaAgentTagServerEncodeResError) {
-
+        
     }
     else{
- 
+        
     }
     
     if ([self.delegate respondsToSelector:@selector(agentErrorResponseFromeDevice:frameOfType:tag:)]) {
@@ -466,7 +526,7 @@ return; \
     }
 }
 - (void)ioFrameChannel:(PTChannel*)channel didEndWithError:(NSError*)error {
-//    NSLog(@"==io end:%@",error);
+    NSLog(@"==io end:%@",error);
     if (connectedDeviceID_ && [connectedDeviceID_ isEqualToNumber:channel.userInfo]) {
         [self didDisconnectFromDevice:connectedDeviceID_];
     }
@@ -484,11 +544,11 @@ return; \
 {
     BOOL success = NO;
     
-//    NSLog(@"==session:%@",self.sessionID);
+    //    NSLog(@"==session:%@",self.sessionID);
     
     if (self.sessionID) {
         commands.sessionID = self.sessionID;
-//        NSLog(@"==2session:%@",self.sessionID);
+        //        NSLog(@"==2session:%@",self.sessionID);
         if (commands.requireSession) {
             commands.path = [commands.path stringByReplacingOccurrencesOfString:TestAAgentSessionIDPrefixStr withString:self.sessionID];
             success = YES;
@@ -512,7 +572,7 @@ return; \
     NSParameterAssert(jsonObj);
     NSParameterAssert(type);
     
-//        NSLog(@"==send request");
+    //        NSLog(@"==send request");
     NSError *error;
     NSData *data = [NSJSONSerialization dataWithJSONObject:jsonObj
                                                    options:NSJSONWritingPrettyPrinted
@@ -525,7 +585,7 @@ return; \
     }
     
     dispatch_data_t payload = data.createReferencingDispatchData;
-//     NSLog(@"==send request frame");
+    //     NSLog(@"==send request frame");
     [connectedChannel_ sendFrameOfType:type tag:tag withPayload:payload callback:callback];
 }
 - (void)callbackRespondWithErrorMessage:(NSString *)errorMessage callback:(void(^)(NSError *error))callback
@@ -538,7 +598,7 @@ return; \
 }
 #pragma mark - test
 - (IBAction)getSession:(id)sender {
-//    NSLog(@"==get session");
+    NSLog(@"==get session");
     if ([self validateChannel]) {
         TestAAgentServerRequestCommands *commands = [TestAAgentServerRequestCommands getSessions];
         commands.completionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
@@ -557,7 +617,7 @@ return; \
                         }
                     }
                 }
-//                NSLog(@"self sessionID:%@",self.sessionID);
+                NSLog(@"self sessionID:%@",self.sessionID);
                 if (!self.sessionID && connectedChannel_) {
                     [self performSelector:@selector(getSession:) withObject:nil afterDelay:1.0];
                 }
@@ -578,7 +638,7 @@ return; \
         if ([self decorateCommands:commands]) {
             [self sendWithJsonObject:[commands commandJsonObject] type:TestWaAgentFrameTypeHttpTalk tag:PTFrameNoTag callback:^(NSError *error) {
                 if (error) {
-//                    NSLog(@"Failed to send message: %@", error);
+                    NSLog(@"Failed to send message: %@", error);
                     if (commands.callbackBlock) {
                         commands.callbackBlock(error);
                     }
@@ -594,33 +654,18 @@ return; \
     return (self.refreshSource || self.refreshScreenshot);
 }
 - (void)refresh{
-    if(self.refreshing) {
-        __weak TestAAgentTool *weakSelf = self;
-        if (self.refreshSource) {
-            self.autoRefreshSourceCompletionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
-                if (weakSelf.receivedSourceBlock) {
-                    weakSelf.receivedSourceBlock(nil,nil);
-                }
-            };
-        }
-        else if (self.refreshScreenshot){
-            self.autoRefreshImgCompletionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
-                if (weakSelf.receivedImgBlock) {
-                    weakSelf.receivedImgBlock(nil,nil);
-                }
-            };
-        }
-
-        return;
-    }
+    [self agentRefreshSource];
+    [self agentRefreshScreenshot];
+}
+- (void)agentRefreshSource{
+    __weak TestAAgentTool *weakSelf = self;
     
     if (!self.autoRefreshSourceCompletionBlock) {
-        __weak TestAAgentTool *weakSelf = self;
         self.autoRefreshSourceCompletionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
             NSString *key = (type == TestWaAgentFrameTypeUsbSourceTalk) ? TestAAgentUsbResStr : TestAAgentHttpResStr;
             NSDictionary *elementDict = nil;
             
-//            key = TestAAgentHttpResStr;
+            //            key = TestAAgentHttpResStr;
             //        NSLog(@"=type:%d",type);
             if ([response.allKeys containsObject:key]) {
                 NSDictionary *httpResDict = response[key];
@@ -635,18 +680,36 @@ return; \
                 weakSelf.receivedSourceBlock(elementDict,nil);
             }
             weakSelf.refreshSource =  NO;
-//            NSLog(@"==finish eleTree:");
+            //            NSLog(@"==finish eleTree:");
         };
     }
     
+    if (self.refreshSource) {
+        self.autoRefreshSourceCompletionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
+            if (weakSelf.receivedSourceBlock) {
+                weakSelf.receivedSourceBlock(nil,nil);
+            }
+        };
+        return;
+    }
+    
+    if (!self.refreshSource) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
+            [self autoRefreshElementTree];
+        });
+    }
+}
+- (void)agentRefreshScreenshot{
+    __weak TestAAgentTool *weakSelf = self;
+    
     if (!self.autoRefreshImgCompletionBlock) {
-        __weak TestAAgentTool *weakSelf = self;
+        
         self.autoRefreshImgCompletionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
             NSString *key = (type == TestWaAgentFrameTypeUsbScreenshotTalk) ? TestAAgentUsbResStr : TestAAgentHttpResStr;
             NSData *imgD = nil;
             
-//            key = TestAAgentHttpResStr;
-//                    NSLog(@"=type:%d",type);
+            //            key = TestAAgentHttpResStr;
+            //                    NSLog(@"=type:%d",type);
             if ([response.allKeys containsObject:key]) {
                 NSDictionary *httpResDict = response[key];
                 if(httpResDict) {
@@ -654,7 +717,7 @@ return; \
                         NSString *imgStr = httpResDict[TestAAgentResValueStr];
                         if (imgStr && [imgStr isKindOfClass:[NSString class]]) {
                             imgD = [[NSData alloc]initWithBase64EncodedString:imgStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
-
+                            
                         }
                         
                     }
@@ -665,20 +728,22 @@ return; \
             }
             weakSelf.refreshScreenshot =  NO;
         };
-        
     }
     
-    if (!self.refreshSource) {
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
-            [self autoRefreshElementTree];
-        });
+    if (self.refreshScreenshot){
+        self.autoRefreshImgCompletionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
+            if (weakSelf.receivedImgBlock) {weakSelf.receivedImgBlock(nil,nil);}
+        };
+        return;
     }
+    
     if (!self.refreshScreenshot) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
             [self autoRefreshScreenshot];
         });
     }
 }
+
 - (void)autoRefreshElementTree{
     //    if ([self validateChannel]) {
     if(self.refreshSource) return;
@@ -719,5 +784,58 @@ return; \
         }
     }];
     //    }
+}
+#pragma mark - remove temp file
++ (void)removeAgentTempFile
+{
+    NSString *dir = [NSHomeDirectory() stringByAppendingPathComponent:@"Library/Developer/Xcode/DerivedData"];
+    NSFileManager *fm = [NSFileManager defaultManager];
+    
+    NSArray *comps = [fm contentsOfDirectoryAtPath:dir error:nil];
+    for (NSString *fileName in comps) {
+        if ([fileName hasPrefix:@"WebDriverAgent-"]) {
+            [fm removeItemAtPath:[dir stringByAppendingPathComponent:fileName] error:nil];
+        }
+    }
+}
+#pragma mark - singleton
++ (instancetype)sharedAgentTool
+{
+    if (!sharedInstance) {
+        sharedInstance = [[TestAAgentTool alloc]init];
+    }
+    
+    return sharedInstance;
+}
++ (id)allocWithZone:(struct _NSZone *)zone
+{
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [super allocWithZone:zone];
+    });
+    return sharedInstance;
+}
+- (void)dealloc
+{
+    [self deallocAgent];
+}
+- (instancetype)init
+{
+    if (self = [super init]) {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^{
+            _uuidToCallbackMap = [NSMutableDictionary dictionary];
+            _udidToDeviceidMap = [NSMutableDictionary dictionary];
+            
+            // We use a serial queue that we toggle depending on if we are connected or
+            // not. When we are not connected to a peer, the queue is running to handle
+            // "connect" tries. When we are connected to a peer, the queue is suspended
+            // thus no longer trying to connect.
+            notConnectedQueue_ = dispatch_queue_create("TestWaAgent.notConnectedQueue", DISPATCH_QUEUE_SERIAL);
+            
+            [self startListeningForDevices];
+        });
+    }
+    return self;
 }
 @end

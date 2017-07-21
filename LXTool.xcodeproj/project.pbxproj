@@ -49,6 +49,8 @@
 		0FB87EC91D7479B600E1680B /* CSSMRSACryptor.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */; };
 		0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EB51D7479B600E1680B /* LXLicenseTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FB87ECB1D7479B600E1680B /* LXLicenseTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EB61D7479B600E1680B /* LXLicenseTool.m */; };
+		0FC11A8E1DEABAA300439589 /* TestAAgentViewInit.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FC11A8C1DEABAA300439589 /* TestAAgentViewInit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FC11A8F1DEABAA300439589 /* TestAAgentViewInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FC11A8D1DEABAA300439589 /* TestAAgentViewInit.m */; };
 		0FD48CF91DB34E4000B76114 /* FBErrorBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48CEE1DB34E4000B76114 /* FBErrorBuilder.h */; };
 		0FD48CFA1DB34E4000B76114 /* FBErrorBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FD48CEF1DB34E4000B76114 /* FBErrorBuilder.m */; };
 		0FD48CFD1DB34E4000B76114 /* TestAAgentServerRequestCommands.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FD48CF21DB34E4000B76114 /* TestAAgentServerRequestCommands.h */; };
@@ -128,6 +130,8 @@
 		0FB87EB41D7479B600E1680B /* CSSMRSACryptor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CSSMRSACryptor.m; sourceTree = "<group>"; };
 		0FB87EB51D7479B600E1680B /* LXLicenseTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXLicenseTool.h; sourceTree = "<group>"; };
 		0FB87EB61D7479B600E1680B /* LXLicenseTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXLicenseTool.m; sourceTree = "<group>"; };
+		0FC11A8C1DEABAA300439589 /* TestAAgentViewInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAAgentViewInit.h; sourceTree = "<group>"; };
+		0FC11A8D1DEABAA300439589 /* TestAAgentViewInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestAAgentViewInit.m; sourceTree = "<group>"; };
 		0FD48CEE1DB34E4000B76114 /* FBErrorBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FBErrorBuilder.h; sourceTree = "<group>"; };
 		0FD48CEF1DB34E4000B76114 /* FBErrorBuilder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FBErrorBuilder.m; sourceTree = "<group>"; };
 		0FD48CF21DB34E4000B76114 /* TestAAgentServerRequestCommands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestAAgentServerRequestCommands.h; sourceTree = "<group>"; };
@@ -349,6 +353,8 @@
 				0FD48CF31DB34E4000B76114 /* TestAAgentServerRequestCommands.m */,
 				0FD48CF41DB34E4000B76114 /* TestAAgentTool.h */,
 				0FD48CF51DB34E4000B76114 /* TestAAgentTool.m */,
+				0FC11A8C1DEABAA300439589 /* TestAAgentViewInit.h */,
+				0FC11A8D1DEABAA300439589 /* TestAAgentViewInit.m */,
 				0FD48CF61DB34E4000B76114 /* TestAElementTypeTransformer.h */,
 				0FD48CF71DB34E4000B76114 /* TestAElementTypeTransformer.m */,
 				0FD48CF81DB34E4000B76114 /* TestWaAgentGeneral.h */,
@@ -388,6 +394,7 @@
 				0FB87EBB1D7479B600E1680B /* GTMDefines.h in Headers */,
 				0FD48CFF1DB34E4000B76114 /* TestAAgentTool.h in Headers */,
 				0FD48D031DB34E4000B76114 /* TestWaAgentGeneral.h in Headers */,
+				0FC11A8E1DEABAA300439589 /* TestAAgentViewInit.h in Headers */,
 				0FD48D011DB34E4000B76114 /* TestAElementTypeTransformer.h in Headers */,
 				0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */,
 				0FB87EC21D7479B600E1680B /* CCMPrivateKey.h in Headers */,
@@ -521,6 +528,7 @@
 				0F0488AA1CE0772D00375563 /* Utility.m in Sources */,
 				0F0488AE1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m in Sources */,
 				0FD48CFE1DB34E4000B76114 /* TestAAgentServerRequestCommands.m in Sources */,
+				0FC11A8F1DEABAA300439589 /* TestAAgentViewInit.m in Sources */,
 				0FD48CFA1DB34E4000B76114 /* FBErrorBuilder.m in Sources */,
 				0FD48D141DB34E4F00B76114 /* PTProtocol.m in Sources */,
 				0FB87EC91D7479B600E1680B /* CSSMRSACryptor.m in Sources */,

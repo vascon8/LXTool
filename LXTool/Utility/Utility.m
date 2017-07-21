@@ -370,6 +370,19 @@ popen2(const char *command, int *infp, int *outfp)
     
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isDownloadSuccess path:androidBinaryPath];
     
+    if (!isDownloadSuccess) {
+        BOOL isCopySuccess = NO;
+        commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell cp '%@' '%@'",udid,apkPath,@"/sdcard/"];
+        //NSLog(@"==commandS:%@",commandStr);
+        
+        result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isCopySuccess path:androidBinaryPath];
+        if (isCopySuccess) {
+            apkPath = [NSString stringWithFormat:@"/sdcard/%@",apkPath.lastPathComponent];
+            commandStr = [NSString stringWithFormat:@"./adb -s '%@' pull '%@' '%@'",udid,apkPath,savePath];
+            result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isDownloadSuccess path:androidBinaryPath];
+        }
+    }
+    
     if (isDownloadSuccess) {
         str = result;
     }
@@ -772,7 +785,7 @@ popen2(const char *command, int *infp, int *outfp)
     return  isSu;
 }
 //adb -s udid shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P 1080x1920@1080x1920/0
-+ (NSString*)startMiniCapWithCustomSDKPath:(NSString*)sdkPath angel:(NSInteger)angel udid:(NSString*)udid isSuccess:(BOOL*)isSuccess
++ (NSString*)startMiniCapWithCustomSDKPath:(NSString*)sdkPath angel:(NSInteger)angel udid:(NSString*)udid isSuccess:(BOOL*)isSuccess interval:(unsigned int)interval
 {
     if(!sdkPath || sdkPath.length == 0) {
         *isSuccess = NO;
@@ -795,7 +808,7 @@ popen2(const char *command, int *infp, int *outfp)
     
     NSString *sizeStr = [self sizeOfDevice:udid androidBinaryPath:androidBinaryPath isSuccess:isSuccess];
     if(*isSuccess) {
-        NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P %@@%@/%ld",udid,sizeStr,sizeStr,angel];
+        NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P %@@%@/%ld -T %d",udid,sizeStr,sizeStr,angel,interval];
 //        NSLog(@"commandstr:%@",commandStr);
         NSString *result = [self runMinicapTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
         *isSuccess = YES;
@@ -1027,7 +1040,7 @@ popen2(const char *command, int *infp, int *outfp)
 //    if (output && args) {
 //        for (id value in args) {
 //            NSLog(@"==value:%@",value);
-//            if ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"whoami;system_profiler SPHardwareDataType;echo $?"]) {
+//            if ([value isKindOfClass:[NSString class]] && [value isEqualToString:@"system_profiler SPHardwareDataType;echo $?"]) {
 //                [output writeToFile:@"/tmp/abc.log" atomically:YES encoding:NSUTF8StringEncoding error:nil];
 //            }
 //        }
@@ -1189,7 +1202,7 @@ popen2(const char *command, int *infp, int *outfp)
     path = [path stringByAppendingPathComponent:@"node_modules/testwa/node_modules/appium-xcuitest-driver/node_modules/deploy"];
     if(![[NSFileManager defaultManager]fileExistsAtPath:path]) return nil;
     
-    NSString *bundleString = [NSString stringWithFormat:@"./ios-deploy -i %@ -B|grep -v com.apple",udid];
+    NSString *bundleString = [NSString stringWithFormat:@"./ios-deploy -i %@ -B",udid];
     NSString *result = [self runTaskInDefaultShellWithCommandStr:bundleString isSuccess:isSuccess path:path];
 //    NSLog(@"result:%@",result);
     NSMutableDictionary *bundleDict;
@@ -1306,6 +1319,12 @@ popen2(const char *command, int *infp, int *outfp)
                 NSRange range = [line rangeOfString:@"Xcode "];
                 if (range.location != NSNotFound) {
                     vStr = [line substringFromIndex:range.length];
+                    
+                    NSRange subRange = [vStr rangeOfString:@"."];
+                    NSRange secSubRange = [vStr rangeOfString:@"." options:NSLiteralSearch range:NSMakeRange(subRange.location+1, vStr.length-subRange.location-1)];
+                    if (secSubRange.location!=NSNotFound) {
+                        vStr = [vStr substringToIndex:secSubRange.location];
+                    }
                 }
             }
         }
@@ -1335,6 +1354,127 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     return path;
+}
+#pragma mark - compare xcode VS ios sdk
+//#10.2.1 “xin liu”的 iPhone (9.2.1) [4b961a2c91afc4bb3050c8868034780eb48]
++ (BOOL)compareXCodeBigOrEqualiOSSDKWithDeviceStr:(NSString*)deviceStr deviceSDK:(NSString**)dSDK xcSDK:(NSString**)xSDK
+{
+    BOOL xcLarge = NO;
+    
+    BOOL xcSuccess = NO;
+    NSArray *xcSDKArr = [self getiOSPlatformIsSuccess:&xcSuccess];
+    if (xcSuccess && xcSDKArr) {
+        xcLarge = YES;
+        NSString *xcSDK = [xcSDKArr firstObject];
+        
+        if(!deviceStr) return xcLarge;
+        
+        //        deviceStr = @" 10.2.1 “xin liu”的 iPhone (9.2.1) [4b961a2c91afc4bb3050c8868034780eb48]";
+        
+        NSString *pattern =  @"\\s\\((\\d+)(?:\\.(\\d+))?(?:\\.(\\d+))?\\)\\s";
+        NSError *regularError;
+        NSRegularExpression *regularStr = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&regularError];
+        if(regularError) {NSLog(@"==error:%@",regularError);return xcLarge;}
+        NSTextCheckingResult *match = [regularStr firstMatchInString:deviceStr options:0 range:NSMakeRange(0, deviceStr.length)];
+        
+        NSString *deviceSDK;
+        if (match) {
+            deviceSDK = [deviceStr substringWithRange:match.range];
+            pattern =  @"(\\d+)(?:\\.(\\d+))?(?:\\.(\\d+))?";
+            regularStr = [NSRegularExpression regularExpressionWithPattern:pattern options:NSRegularExpressionCaseInsensitive error:&regularError];
+            if(regularError) {NSLog(@"==error:%@",regularError);return xcLarge;}
+            match = [regularStr firstMatchInString:deviceSDK options:0 range:NSMakeRange(0, deviceSDK.length)];
+            if (!regularError && match) {
+                deviceSDK = [deviceSDK substringWithRange:match.range];
+                //                NSLog(@"=deviceSDK:%@",deviceSDK);
+            }
+        }
+        
+        if (xcSuccess && deviceSDK && xcSDK) {
+            *xSDK = xcSDK;
+            *dSDK = deviceSDK;
+            xcLarge = [self compareBigOrEqualFirstNumberFirst:xcSDK second:deviceSDK];
+        }
+    }
+    //    NSLog(@"=xclarge:%d",xcLarge);
+    return xcLarge;
+}
++ (BOOL)compareBigOrEqualFirstNumberFirst:(NSString*)firstStr second:(NSString*)secStr
+{
+    if(!firstStr || !secStr) return YES;
+    
+    NSString *seprator = @".";
+    NSNumber *firstN;
+    NSNumber *secN;
+    
+    NSRange firstRange = [firstStr rangeOfString:seprator];
+    NSRange secRange = [secStr rangeOfString:seprator];
+    
+    NSNumberFormatter *formatter = [[NSNumberFormatter alloc]init];
+    [formatter setNumberStyle:NSNumberFormatterDecimalStyle];
+    
+    if(firstRange.location != NSNotFound){
+        firstN = [formatter numberFromString:[firstStr substringToIndex:firstRange.location]];
+    }
+    else firstN = [formatter numberFromString:firstStr];
+    
+    if (secRange.location != NSNotFound) {
+        secN = [formatter numberFromString:[secStr substringToIndex:secRange.location]];
+    }
+    else secN = [formatter numberFromString:secStr];
+    
+    //    NSLog(@"==firstN:%@,secN:%@",firstN,secN);
+    
+    
+    if (firstN > secN) {
+        return YES;
+    }
+    else if(firstN < secN){
+        return NO;
+    }
+    else if(firstN == secN){
+        
+        if (firstRange.location != NSNotFound && secRange.location != NSNotFound) {
+            firstStr = [firstStr substringFromIndex:firstRange.location+1];
+            secStr = [secStr substringFromIndex:secRange.location+1];
+            return [self compareBigOrEqualFirstNumberFirst:firstStr second:secStr];
+        }
+        else{
+            if (secRange.location == NSNotFound && secRange.location == NSNotFound) {
+                return YES;
+            }
+            else if (secRange.location == NSNotFound && firstRange.location != NSNotFound){
+                return YES;
+            }
+            else if (secRange.location != NSNotFound && firstRange.location == NSNotFound){
+                return NO;
+            }
+        }
+    }
+    
+    return YES;
+}
++ (NSString *)getFullXcodeVersionisSuccess:(BOOL*)isSuccess
+{
+    NSString *result= [self runTaskInDefaultShellWithCommandStr:@"xcodebuild -version" isSuccess:isSuccess];
+    
+    NSString *vStr=nil;
+    
+    if (*isSuccess) {
+        for (NSString* line in [result componentsSeparatedByString:@"\n"]) {
+            if ([line hasPrefix:@"Xcode "]) {
+                NSRange range = [line rangeOfString:@"Xcode "];
+                if (range.location != NSNotFound) {
+                    vStr = [line substringFromIndex:range.length];
+                }
+            }
+        }
+    }
+    else{
+        vStr = [NSString stringWithFormat:@"%@\nWarning:找不到XCode,请检查XCode安装和设置!\n",result];
+    }
+    
+    return vStr;
 }
 #pragma mark - android activity package
 + (void)refreshAndroidActivity:(NSMutableArray**)activityArr package:(NSMutableArray**)packageArr app:(NSString*)appPath customSDKPath:(NSString*)customSDKPath
@@ -1542,5 +1682,22 @@ popen2(const char *command, int *infp, int *outfp)
     } else {
         return @"left";
     }
+}
++ (NSString*)directionString:(NSString*)direction
+{
+    if ([direction isEqualToString:@"up"]) {
+        return @"向上";
+    }
+    else if ([direction isEqualToString:@"down"]) {
+        return @"向下";
+    }
+    else if ([direction isEqualToString:@"right"]) {
+        return @"向右";
+    }
+    else if ([direction isEqualToString:@"left"]) {
+        return @"向左";
+    }
+    
+    return direction;
 }
 @end

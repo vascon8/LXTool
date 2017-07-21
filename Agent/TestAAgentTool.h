@@ -28,10 +28,18 @@ static const NSTimeInterval TestWaAgentReconnectDelay = 1.0;
 @property (readonly) BOOL ready;
 @property BOOL sessionReady;
 
-- (instancetype)initWithDevice:(NSString *)deviceUdid delegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock;
-- (instancetype)initWithSimulatorAndDelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock;
+//- (instancetype)initWithDevice:(NSString *)deviceUdid delegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock;
+//- (instancetype)initWithSimulatorAndDelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock;
+
++ (instancetype)sharedAgentTool;
+
+- (instancetype)connectToDevice:(NSString *)deviceUdid delegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock;
+- (instancetype)connectToSimulatorWithDelegate:(id<TestAAgentDelegate>)delegate receiveImgBlock:(TestAAgentRefreshBlock)receiveImgBlock receivedSourceBlock:(TestAAgentRefreshBlock)receivedSourceBlock;
+- (void)disconnectAgent;
 
 - (void)refresh;
+- (void)agentRefreshScreenshot;
+- (void)agentRefreshSource;
 //screenshot && source
 @property (readonly) BOOL refreshing;
 
@@ -41,4 +49,6 @@ static const NSTimeInterval TestWaAgentReconnectDelay = 1.0;
 
 #pragma mark - action
 - (void)deallocAgent;
+
++ (void)removeAgentTempFile;
 @end
