@@ -219,7 +219,7 @@ popen2(const char *command, int *infp, int *outfp)
 + (NSArray *)getAndroidDevicesWithSDKPath:(NSString *)sdkPath
 {
     NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
-    NSLog(@"getAndroid:%@\n,binary:%@",sdkPath,androidBinaryPath);
+    //NSLog(@"getAndroid:%@\n,binary:%@",sdkPath,androidBinaryPath);
     if(!androidBinaryPath) return nil;
     
     NSMutableArray *devices = [NSMutableArray new];
@@ -242,7 +242,7 @@ popen2(const char *command, int *infp, int *outfp)
 {
     NSString *androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:sdkPath];
     NSMutableDictionary *devicePackageDict = [NSMutableDictionary new];
-    NSLog(@"getAndroid:%@\n,binary:%@",sdkPath,androidBinaryPath);
+    //NSLog(@"getAndroid:%@\n,binary:%@",sdkPath,androidBinaryPath);
     if(!androidBinaryPath) return devicePackageDict;
     
     NSString *deviceListString = [self runTaskWithBinary:androidBinaryPath arguments:@[@"devices",@"-l"]];
@@ -330,7 +330,7 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     if(!isSuccess || !udid || !package || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return @"failed";
     }
     
@@ -359,7 +359,7 @@ popen2(const char *command, int *infp, int *outfp)
     NSString *str;
     androidBinaryPath = [Utility pathToAndroidBinary:@"adb" atSDKPath:androidBinaryPath];
     if (!isDownloadSuccess || !apkPath || !udid || !savePath || !androidBinaryPath) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return @"failed";
     }
     
@@ -370,15 +370,16 @@ popen2(const char *command, int *infp, int *outfp)
     
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isDownloadSuccess path:androidBinaryPath];
     
-    if (!isDownloadSuccess) {
+    if (!*isDownloadSuccess) {
         BOOL isCopySuccess = NO;
         commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell cp '%@' '%@'",udid,apkPath,@"/sdcard/"];
-        //NSLog(@"==commandS:%@",commandStr);
+        //NSLog(@"==cp commandS:%@",commandStr);
         
         result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isCopySuccess path:androidBinaryPath];
-        if (isCopySuccess) {
+        if (isCopySuccess || [result isEqualToString:@"0\n"]) {
             apkPath = [NSString stringWithFormat:@"/sdcard/%@",apkPath.lastPathComponent];
             commandStr = [NSString stringWithFormat:@"./adb -s '%@' pull '%@' '%@'",udid,apkPath,savePath];
+            //NSLog(@"==pull commandS:%@",commandStr);
             result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isDownloadSuccess path:androidBinaryPath];
         }
     }
@@ -415,7 +416,7 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return @"failed";
     }
     
@@ -444,7 +445,7 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return @"";
     }
     
@@ -482,7 +483,7 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         *isSuccess = NO;
         return @"failed";
     }
@@ -495,7 +496,7 @@ popen2(const char *command, int *infp, int *outfp)
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:isSuccess path:androidBinaryPath];
     if(result && result.length>1 && [result hasSuffix:@"\n"]) result = [result substringToIndex:result.length-1];
     if(result && result.length>1 && [result hasSuffix:@"\r"]) result = [result substringToIndex:result.length-1];
-    NSLog(@"apiV:%@",result);
+    //NSLog(@"apiV:%@",result);
     
     if (isSuccess) {
         apiVersion = result;
@@ -531,14 +532,14 @@ popen2(const char *command, int *infp, int *outfp)
         }
     }
     
-    NSLog(@"sizeOFdE:%@",result);
+    //NSLog(@"sizeOFdE:%@",result);
     return result;
 }
 //adb -s udid shell getprop
 + (BOOL)isAndroidSimulatorForUdid:(NSString*)udid sdkPath:(NSString*)sdkPath additional:(NSString*)addition
 {
     if( !udid || udid.length<3 || !sdkPath || sdkPath.length == 0) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return NO;
     }
     
@@ -561,7 +562,7 @@ popen2(const char *command, int *infp, int *outfp)
     if (result && [result isEqualToString:@"generic"]) {
         isSimulaotr = YES;
     }
-    NSLog(@"is android simulator:%d %@ %ld",isSimulaotr,result,result.length);
+    //NSLog(@"is android simulator:%d %@ %ld",isSimulaotr,result,result.length);
     
     return isSimulaotr;
 }
@@ -695,14 +696,14 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return NO;
     }
     
     BOOL isSuccess = NO;
     NSString *commandStr = [NSString stringWithFormat:@"./adb -s '%@' shell LD_LIBRARY_PATH=/data/local/tmp /data/local/tmp/minicap -P %@x%@@%@x%@/%ld -t",udid,width,height,width,height,angel];
     NSString *result = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess path:androidBinaryPath];
-    NSLog(@"support result:%@ %@",udid,result);
+    //NSLog(@"support result:%@ %@",udid,result);
     
     return  isSuccess;
 }
@@ -801,7 +802,7 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         *isSuccess = NO;
         return nil;
     }
@@ -839,7 +840,7 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         if(isSuccess) *isSuccess = NO;
         return nil;
     }
@@ -884,7 +885,7 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         *isSuccess = NO;
         return nil;
     }
@@ -923,7 +924,7 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         *isSuccess = NO;
         return nil;
     }
@@ -946,7 +947,7 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return NO;
     }
     
@@ -982,7 +983,7 @@ popen2(const char *command, int *infp, int *outfp)
     if ([[[androidBinaryPath lastPathComponent] lowercaseString] isEqualToString:@"adb"]) androidBinaryPath = [androidBinaryPath stringByDeletingLastPathComponent];
     
     if( !udid || udid.length<3) {
-        NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"can't be nil:%@",NSStringFromSelector(_cmd));
         return nil;
     }
     
@@ -1477,10 +1478,75 @@ popen2(const char *command, int *infp, int *outfp)
     return vStr;
 }
 #pragma mark - android activity package
++ (NSDictionary*)apkPackageAndVersionTheAppPath:(NSString*)appPath customSDKPath:(NSString*)customSDKPath
+{
+    if (!customSDKPath || !appPath) {
+        NSLog(@"failed:%@",NSStringFromSelector(_cmd));
+        return nil;
+    }
+    
+    NSString *aaptPath = [self pathToAndroidBinary:@"aapt" atSDKPath:customSDKPath];
+    if(!aaptPath || aaptPath.length < 10) return nil;
+    if ([[[aaptPath lastPathComponent] lowercaseString] isEqualToString:@"aapt"]) aaptPath = [aaptPath stringByDeletingLastPathComponent];
+    
+    // get the xml dump from aapt
+    NSString *commandStr = [NSString stringWithFormat:@"./aapt dump xmltree '%@' AndroidManifest.xml",appPath];
+    
+    BOOL isAaptSuccess = NO;
+    NSString *aaptString = [self runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isAaptSuccess path:aaptPath];
+    
+    NSArray *aaptLines = [aaptString componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    NSString *ver;
+    NSString *appID;
+    
+    NSString *pattern = @"=";
+    NSString *contentPattern = @"\"";
+    
+    for (int i=0; i < aaptLines.count; i++)
+    {
+        NSString *line = [((NSString*)[aaptLines objectAtIndex:i]) stringByTrimmingLeadingWhitespace];
+        
+        // determine when an activity element has started or ended
+        if ([line hasPrefix:@"A: android:versionName"])
+        {
+            NSRange range = [line rangeOfString:pattern];
+            if (range.location != NSNotFound) {
+                NSRange bgRange = [line rangeOfString:contentPattern options:0 range:NSMakeRange(range.location+1, line.length-range.location-1)];
+                if (bgRange.location != NSNotFound) {
+                    NSRange endRange = [line rangeOfString:contentPattern options:0 range:NSMakeRange(bgRange.location+1, line.length-bgRange.location-1)];
+                    if (bgRange.location != NSNotFound && endRange.location != NSNotFound) {
+                        ver = [line substringWithRange:NSMakeRange(bgRange.location+1, endRange.location-bgRange.location-1)];
+                    }
+                }
+            }
+        }
+        if ([line hasPrefix:@"A: package="])
+        {
+            NSRange range = [line rangeOfString:pattern];
+            if (range.location != NSNotFound) {
+                NSRange bgRange = [line rangeOfString:contentPattern options:0 range:NSMakeRange(range.location+1, line.length-range.location-1)];
+                if (bgRange.location != NSNotFound) {
+                    NSRange endRange = [line rangeOfString:contentPattern options:0 range:NSMakeRange(bgRange.location+1, line.length-bgRange.location-1)];
+                    if (bgRange.location != NSNotFound && endRange.location != NSNotFound) {
+                        appID = [line substringWithRange:NSMakeRange(bgRange.location+1, endRange.location-bgRange.location-1)];
+                    }
+                }
+            }
+        }
+        
+    }
+    
+    if (ver && appID) {
+        return @{@"ver":ver,@"appID":appID};
+    }
+    
+    return nil;
+}
 + (void)refreshAndroidActivity:(NSMutableArray**)activityArr package:(NSMutableArray**)packageArr app:(NSString*)appPath customSDKPath:(NSString*)customSDKPath
 {
     if (!customSDKPath || !appPath || !activityArr || !packageArr) {
-        NSLog(@"failed:%@",NSStringFromSelector(_cmd));
+        //NSLog(@"failed:%@",NSStringFromSelector(_cmd));
         return;
     }
     

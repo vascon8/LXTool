@@ -176,20 +176,20 @@ static TestAAgentTool *sharedInstance=nil;
     observer = nil;
     detachObserver = nil;
     
-    NSLog(@"==dealloc agent");
+//    NSLog(@"==dealloc agent");
 }
 - (void)startListeningForDevices {
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     
     observer = [nc addObserverForName:PTUSBDeviceDidAttachNotification object:PTUSBHub.sharedHub queue:nil usingBlock:^(NSNotification *note) {
-        NSLog(@"PTUSBDeviceDidAttachNotification: %@", note.userInfo);
+//        NSLog(@"PTUSBDeviceDidAttachNotification: %@", note.userInfo);
         [self connectToDeviceWithUserinfo:note.userInfo];
     }];
     
     detachObserver = [nc addObserverForName:PTUSBDeviceDidDetachNotification object:PTUSBHub.sharedHub queue:nil usingBlock:^(NSNotification *note) {
         NSNumber *deviceID = [note.userInfo objectForKey:@"DeviceID"];
         //NSLog(@"PTUSBDeviceDidDetachNotification: %@", note.userInfo);
-        NSLog(@"PTUSBDeviceDidDetachNotification: %@", deviceID);
+//        NSLog(@"PTUSBDeviceDidDetachNotification: %@", deviceID);
         
         if ([connectingToDeviceID_ isEqualToNumber:deviceID]) {
             connectedDeviceProperties_ = nil;
@@ -311,7 +311,7 @@ static TestAAgentTool *sharedInstance=nil;
             self.connectedChannel = channel;
             channel.userInfo = address;
             
-            NSLog(@"Connected to %@", address);
+//            NSLog(@"Connected to %@", address);
         }
         //        if(self && _deviceUdid) [self performSelector:@selector(enqueueConnectToLocalIPv4Port) withObject:nil afterDelay:TestWaAgentReconnectDelay];
     }];
@@ -385,7 +385,7 @@ static TestAAgentTool *sharedInstance=nil;
     else if (type == TestWaAgentFrameTypeHttpTalk){
         
         NSDictionary *response = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableContainers error:&innerError];
-        NSLog(@"=res from iphone");
+//        NSLog(@"=res from iphone");
         
         if (innerError) {
             success = NO;
@@ -598,7 +598,7 @@ static TestAAgentTool *sharedInstance=nil;
 }
 #pragma mark - test
 - (IBAction)getSession:(id)sender {
-    NSLog(@"==get session");
+//    NSLog(@"==get session");
     if ([self validateChannel]) {
         TestAAgentServerRequestCommands *commands = [TestAAgentServerRequestCommands getSessions];
         commands.completionBlock = ^(NSDictionary *response,NSError *reqError,uint32 type){
@@ -617,7 +617,7 @@ static TestAAgentTool *sharedInstance=nil;
                         }
                     }
                 }
-                NSLog(@"self sessionID:%@",self.sessionID);
+//                NSLog(@"self sessionID:%@",self.sessionID);
                 if (!self.sessionID && connectedChannel_) {
                     [self performSelector:@selector(getSession:) withObject:nil afterDelay:1.0];
                 }

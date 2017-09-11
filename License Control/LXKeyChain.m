@@ -33,7 +33,7 @@
 	if( ret == noErr ) string = [[NSString allocWithZone:nil] initWithBytes:(const void *) p length:len encoding:NSUTF8StringEncoding];
 	SecKeychainItemFreeContent( NULL, p );
     
-    NSLog(@"keychain osstatus:%d",ret);
+    //NSLog(@"keychain osstatus:%d",ret);
     
 	return string;
 }

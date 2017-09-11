@@ -29,6 +29,7 @@
 //android device platform version
 + (NSString*)sdkVersionOfDevice:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath;
 + (NSString*)androidDeviceNameOfUdid:(NSString*)udid androidBinaryPath:(NSString*)androidBinaryPath;
++ (NSDictionary*)apkPackageAndVersionTheAppPath:(NSString*)appPath customSDKPath:(NSString*)customSDKPath;
 
 + (BOOL)isAndroidSimulatorForUdid:(NSString*)udid sdkPath:(NSString*)sdkPath additional:(NSString*)addition;
 
