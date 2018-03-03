@@ -1147,7 +1147,7 @@ popen2(const char *command, int *infp, int *outfp)
     //    deviceListString = strM;
     
     //xcode 5,6,7 real device 40 characters no -
-    NSString *pattern = @"[a-zA-Z0-9]{40}";
+    NSString *pattern = @"\\[[a-zA-Z0-9]{40}\\]";
     
     NSRegularExpression *regular = [NSRegularExpression regularExpressionWithPattern:pattern options:0 error:nil];
     
@@ -1159,7 +1159,8 @@ popen2(const char *command, int *infp, int *outfp)
         
         NSTextCheckingResult *match = [regular firstMatchInString:line options:0 range:NSMakeRange(0, line.length)];
         if (match) {
-            NSString *udid = [line substringWithRange:match.range];
+            NSRange range = NSMakeRange(match.range.location+1, match.range.length-2);
+            NSString *udid = [line substringWithRange:range];
             [udids setValue:udid forKey:line];
         }
         //        }
@@ -1200,7 +1201,7 @@ popen2(const char *command, int *infp, int *outfp)
 {
     //    NSString *bundleString = [NSString stringWithFormat:@"ideviceinstaller -l -o list_user --udid %@",udid];
     NSString *path = [[NSBundle mainBundle]resourcePath];
-    path = [path stringByAppendingPathComponent:@"node_modules/testwa/node_modules/appium-xcuitest-driver/node_modules/deploy"];
+    path = [path stringByAppendingPathComponent:@"node_modules/testwa/node_modules/appium-xcuitest-driver/deploy"];
     if(![[NSFileManager defaultManager]fileExistsAtPath:path]) return nil;
     
     NSString *bundleString = [NSString stringWithFormat:@"./ios-deploy -i %@ -B",udid];
@@ -1765,5 +1766,213 @@ popen2(const char *command, int *infp, int *outfp)
     }
     
     return direction;
+}
+#pragma mark - pipe
+-(void)normalLoop:(TaskMsgBlock)taskNormalBlock
+{
+    while (self.task.isRunning) {
+        NSFileHandle *serverStdErr = [self.task.standardOutput fileHandleForReading];
+        NSData *data = [serverStdErr availableData];
+        NSString *string = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
+        taskNormalBlock(string);
+    }
+}
+-(void)errorLoop:(TaskMsgBlock)taskErrorBlock
+{
+    while (self.task.isRunning) {
+        NSFileHandle *serverStdErr = [self.task.standardError fileHandleForReading];
+        NSData *data = [serverStdErr availableData];
+        NSString *string = [[NSString alloc] initWithData:data encoding: NSUTF8StringEncoding];
+        taskErrorBlock(string);
+    }
+}
+-(void)exitTask:(TaskFinishBlock)taskExitBlock
+{
+    taskExitBlock();
+}
+- (void)runDefaultShellInBGWithCommandStr:(NSString*)commandStr Msgblock:(TaskMsgBlock)msgBlock finishBlock:(TaskFinishBlock)finishBlock
+{
+    self.task = [NSTask new];
+    NSString *homeDir = NSHomeDirectory();
+    if ([[NSFileManager defaultManager]fileExistsAtPath:homeDir]) {
+        [self.task setCurrentDirectoryPath:NSHomeDirectory()];
+    }
+    
+    [self.task setLaunchPath:@"/bin/bash"];
+    [self.task setArguments:@[@"-l",@"-c",commandStr]];
+    [self.task setStandardInput:[NSPipe pipe]];
+    NSPipe *pipe = [NSPipe pipe];
+    
+    [self.task setStandardError:pipe];
+    [self.task setStandardOutput:pipe];
+    
+    [self.task launch];
+    
+    [self performSelectorInBackground:@selector(normalLoop:) withObject:msgBlock];
+    [self performSelectorInBackground:@selector(errorLoop:) withObject:msgBlock];
+    [self performSelectorInBackground:@selector(exitTask:) withObject:finishBlock];
+}
+#pragma mark - certificate
++ (NSDictionary*)runSecurityCheckInDefaultShellWithProfilePath:(NSString*)profilePath
+{
+    NSDictionary *dict = nil;
+    NSString *tempPath = @"/tmp/testwaSecTemp.plist";
+    if ([[NSFileManager defaultManager] fileExistsAtPath:tempPath]) {
+        [[NSFileManager defaultManager] removeItemAtPath:tempPath error:nil];
+    }
+    [Utility runTaskWithBinary:@"/usr/bin/security" arguments:@[@"cms",@"-i",profilePath,@"-D",@"-o",tempPath]];
+    
+    if([[NSFileManager defaultManager] fileExistsAtPath:tempPath])
+    {
+        dict = [NSDictionary dictionaryWithContentsOfFile:tempPath];
+    }
+    
+    return dict;
+}
++ (void)openFileInDefaultShellWithFilePath:(NSString*)FilePath
+{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:FilePath]) {
+        BOOL isSuccess;
+        NSString *commandStr = [NSString stringWithFormat:@"open %@",FilePath];
+        [Utility runTaskInDefaultShellWithCommandStr:commandStr isSuccess:&isSuccess];
+    }
+}
++ (NSArray*)schemesWithPrjPath:(NSString*)PrjPath
+{
+    if ([[NSFileManager defaultManager] fileExistsAtPath:PrjPath]) {
+        NSString *commandStr = [NSString stringWithFormat:@"cd %@;xcodebuild -list -json",[PrjPath stringByDeletingLastPathComponent]];
+        NSString *result = [Utility runTaskWithBinary:@"/bin/bash" arguments:@[@"-l",@"-c",commandStr]];
+        if (result) {
+            NSError *error;
+            NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:[result dataUsingEncoding:NSUTF8StringEncoding] options:NSJSONReadingAllowFragments error:&error];
+            if (error) {
+                NSString *errStr = [error localizedDescription];
+            }
+            else{
+                NSDictionary *prjDict = dict[@"project"];
+                if (prjDict && [prjDict isKindOfClass:[NSDictionary class]]) {
+                    NSArray* schemes = prjDict[@"schemes"];
+                    return schemes;
+                }
+            }
+        }
+    }
+    
+    return nil;
+}
+/*
+ xcodebuild clean -project ./weibo_webView.xcodeproj
+ xcodebuild -project weibo_webView.xcodeproj -scheme weibo_webView -archivePath build/weibo_webView-adhoc.xcarchive clean archive build CODE_SIGN_IDENTITY="iPhone Distribution" PROVISIONING_PROFILE="d1137b63-a9ca-456a-a398-9fa433bd469a" DEVELOPMENT_TEAM="359TERPD84"
+ xcodebuild -exportArchive -archivePath build/weibo_webView-adhoc.xcarchive -exportOptionsPlist ADHOCExportOptionsPlist.plist -exportPath exportPath/weibo_webView-adhoc
+ */
++(NSString*)xcodebuildCleanPrj:(NSString*)prjPath
+{
+    NSString *result;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:prjPath]) {
+        NSString *commandStr = [NSString stringWithFormat:@"cd %@;xcodebuild clean -project ./%@",[prjPath stringByDeletingLastPathComponent],[prjPath lastPathComponent]];
+        result = [Utility runTaskWithBinary:@"/bin/bash" arguments:@[@"-l",@"-c",commandStr]];
+    }
+    return result;
+}
+-(NSString*)xcodebuildPrj:(NSString*)prjPath scheme:(NSString*)scheme ppuuid:(NSString*)ppuuid teamID:(NSString*)teamID taskmsgBlock:(TaskMsgBlock)msgblock taskFinishBlock:(TaskFinishBlock)finishBlock
+{
+    if (!prjPath || ![[NSFileManager defaultManager] fileExistsAtPath:prjPath]) {
+        return @"项目出错：该项目不存在或者项目路径不对。\n";
+    }
+    if (!scheme) {
+        return @"项目出错：无法读取项目中scheme信息。\n";
+    }
+    if (!ppuuid) {
+        return @"ProvisioningProfile出错：对应的ppuuid找不到。\n";
+    }
+    if (!teamID) {
+        return @"开发者账号出错：没有获取到账号信息。\n";
+    }
+    
+    NSString *result;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:prjPath]) {
+        NSString *commandStr = [NSString stringWithFormat:@"cd %@;xcodebuild -project %@ -scheme %@ -archivePath build/%@-adhoc.xcarchive clean archive build CODE_SIGN_IDENTITY=\"iPhone Distribution\" PROVISIONING_PROFILE=\"%@\" DEVELOPMENT_TEAM=\"%@\"",[prjPath stringByDeletingLastPathComponent],[prjPath lastPathComponent],scheme,scheme,ppuuid,teamID];
+        //result = [Utility runTaskWithBinary:@"/bin/bash" arguments:@[@"-l",@"-c",commandStr]];
+        
+        [self runDefaultShellInBGWithCommandStr:commandStr Msgblock:msgblock finishBlock:finishBlock];
+    }
+    return result;
+}
+-(NSString*)xcodebuildArchivePrj:(NSString*)prjPath scheme:(NSString*)scheme ppuuid:(NSString*)ppuuid teamID:(NSString*)teamID taskmsgBlock:(TaskMsgBlock)msgblock taskFinishBlock:(TaskFinishBlock)finishBlock
+{
+    if (!prjPath || ![[NSFileManager defaultManager] fileExistsAtPath:prjPath]) {
+        return @"项目出错：该项目不存在或者项目路径不对。\n";
+    }
+    if (!scheme) {
+        return @"项目出错：无法读取项目中scheme信息。\n";
+    }
+    if (!ppuuid) {
+        return @"ProvisioningProfile出错：对应的ppuuid找不到。\n";
+    }
+    if (!teamID) {
+        return @"开发者账号出错：没有获取到账号信息。\n";
+    }
+    
+    NSString *result;
+    NSString *plistName = @"ADHOCExportOptionsPlist.plist";
+    if ([[NSFileManager defaultManager] fileExistsAtPath:prjPath] && [Utility generateADHocOptPlistPrjPath:prjPath scheme:scheme ppuuid:ppuuid plistFileName:plistName teamID:teamID]) {
+        NSString *commandStr = [NSString stringWithFormat:@"cd %@;xcodebuild -exportArchive -archivePath build/%@-adhoc.xcarchive -exportOptionsPlist %@  -exportPath exportPath/%@-adhoc",[prjPath stringByDeletingLastPathComponent],scheme,plistName,scheme];
+        //        result = [Utility runTaskWithBinary:@"/bin/bash" arguments:@[@"-l",@"-c",commandStr]];
+        [self runDefaultShellInBGWithCommandStr:commandStr Msgblock:msgblock finishBlock:finishBlock];
+    }
+    return result;
+}
++(BOOL)generateADHocOptPlistPrjPath:(NSString*)prjPath scheme:(NSString*)scheme ppuuid:(NSString*)ppuuid plistFileName:(NSString*)plistName teamID:(NSString*)teamID
+{
+    if (!prjPath || ![[NSFileManager defaultManager] fileExistsAtPath:prjPath]) {
+        return NO;
+    }
+    
+    NSString *infoPath = [NSString stringWithFormat:@"%@/build/%@-adhoc.xcarchive/info.plist",[prjPath stringByDeletingLastPathComponent],scheme];
+    NSString *bundleID;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:infoPath]) {
+        NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:infoPath];
+        dict = dict[@"ApplicationProperties"];
+        bundleID = dict[@"CFBundleIdentifier"];
+        if (!bundleID) {
+            return NO;
+        }
+    }
+    
+    NSString *plistString = [NSString stringWithFormat:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\
+<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n\
+<plist version=\"1.0\">\n\
+<dict>\n\
+\t<key>compileBitcode</key>\n\
+\t<true/>\n\
+\t<key>method</key>\n\
+\t<string>ad-hoc</string>\n\
+\t<key>provisioningProfiles</key>\n\
+\t<dict>\n\
+\t\t<key>%@</key>\n\
+\t\t<string>%@</string>\n\
+\t</dict>\n\
+\t<key>signingCertificate</key>\n\
+\t<string>iPhone Distribution</string>\n\
+\t<key>signingStyle</key>\n\
+\t<string>manual</string>\n\
+\t<key>stripSwiftSymbols</key>\n\
+\t<true/>\n\
+\t<key>teamID</key>\n\
+\t<string>%@</string>\n\
+</dict>\n\
+</plist>",bundleID,ppuuid,teamID];
+    NSString *file = [NSString stringWithFormat:@"%@/%@",[prjPath stringByDeletingLastPathComponent],plistName];
+    NSError *error = nil;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:file]) {
+        [[NSFileManager defaultManager] removeItemAtPath:file error:&error];
+    }
+    [plistString writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    
+    if (!error) {
+        return YES;
+    }
+    
+    return NO;
 }
 @end

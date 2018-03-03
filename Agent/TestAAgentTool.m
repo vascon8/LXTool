@@ -798,6 +798,26 @@ static TestAAgentTool *sharedInstance=nil;
         }
     }
 }
+#pragma mark - format
+-(void)alwaysUseSourceFormatDescription:(BOOL)useFormatDescription
+{
+    TestAAgentServerRequestCommands *commands;
+    if (useFormatDescription) {
+        commands = [TestAAgentServerRequestCommands setFormatDes];
+    }
+    else
+    {
+        commands = [TestAAgentServerRequestCommands setFormatDefault];
+    }
+    
+    [self decorateCommands:commands];
+    [self sendWithJsonObject:[commands commandJsonObject] type:TestWaAgentFrameTypeUsbTalk tag:PTFrameNoTag callback:^(NSError *error) {
+        if (error) {
+//            NSLog(@"Failed to send message: %@", error);
+        }
+    }];
+    //    }
+}
 #pragma mark - singleton
 + (instancetype)sharedAgentTool
 {

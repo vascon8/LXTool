@@ -28,6 +28,8 @@
 		0F0488BF1CE077FC00375563 /* LXKeyChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488BB1CE077FC00375563 /* LXKeyChain.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0F0488C01CE077FC00375563 /* LXKeyChain.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F0488BC1CE077FC00375563 /* LXKeyChain.m */; };
 		0F0488C31CE07ABE00375563 /* LXTool.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F0488831CE0762900375563 /* LXTool.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F38E8D6204AC26100C9AEFC /* NSColor+LX.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F38E8D4204AC26100C9AEFC /* NSColor+LX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F38E8D7204AC26100C9AEFC /* NSColor+LX.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F38E8D5204AC26100C9AEFC /* NSColor+LX.m */; };
 		0FB87EB71D7479B600E1680B /* AA3DESManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EA01D7479B600E1680B /* AA3DESManager.h */; };
 		0FB87EB81D7479B600E1680B /* AA3DESManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 0FB87EA11D7479B600E1680B /* AA3DESManager.m */; };
 		0FB87EB91D7479B600E1680B /* GTMBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB87EA31D7479B600E1680B /* GTMBase64.h */; };
@@ -109,6 +111,8 @@
 		0F0488B31CE0778300375563 /* NSObject+LXDict.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+LXDict.m"; sourceTree = "<group>"; };
 		0F0488BB1CE077FC00375563 /* LXKeyChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LXKeyChain.h; sourceTree = "<group>"; };
 		0F0488BC1CE077FC00375563 /* LXKeyChain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LXKeyChain.m; sourceTree = "<group>"; };
+		0F38E8D4204AC26100C9AEFC /* NSColor+LX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSColor+LX.h"; sourceTree = "<group>"; };
+		0F38E8D5204AC26100C9AEFC /* NSColor+LX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSColor+LX.m"; sourceTree = "<group>"; };
 		0FB87EA01D7479B600E1680B /* AA3DESManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AA3DESManager.h; sourceTree = "<group>"; };
 		0FB87EA11D7479B600E1680B /* AA3DESManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AA3DESManager.m; sourceTree = "<group>"; };
 		0FB87EA31D7479B600E1680B /* GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMBase64.h; sourceTree = "<group>"; };
@@ -273,6 +277,8 @@
 			children = (
 				0F0488AB1CE0775B00375563 /* NSString+TrimLeadingWhitespace.h */,
 				0F0488AC1CE0775B00375563 /* NSString+TrimLeadingWhitespace.m */,
+				0F38E8D4204AC26100C9AEFC /* NSColor+LX.h */,
+				0F38E8D5204AC26100C9AEFC /* NSColor+LX.m */,
 			);
 			name = Ext;
 			path = LXTool/Ext;
@@ -396,6 +402,7 @@
 				0FD48D031DB34E4000B76114 /* TestWaAgentGeneral.h in Headers */,
 				0FC11A8E1DEABAA300439589 /* TestAAgentViewInit.h in Headers */,
 				0FD48D011DB34E4000B76114 /* TestAElementTypeTransformer.h in Headers */,
+				0F38E8D6204AC26100C9AEFC /* NSColor+LX.h in Headers */,
 				0FB87ECA1D7479B600E1680B /* LXLicenseTool.h in Headers */,
 				0FB87EC21D7479B600E1680B /* CCMPrivateKey.h in Headers */,
 				0F0488A91CE0772D00375563 /* Utility.h in Headers */,
@@ -514,6 +521,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F38E8D7204AC26100C9AEFC /* NSColor+LX.m in Sources */,
 				0F0488B61CE0778300375563 /* LXIvar.m in Sources */,
 				0F0488B81CE0778300375563 /* NSObject+LXDict.m in Sources */,
 				0FB87EBD1D7479B600E1680B /* CCMBase64.m in Sources */,

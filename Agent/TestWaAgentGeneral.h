@@ -31,6 +31,8 @@
 #define TestAAgentCommandGetTree @"tree"
 #define TestAAgentCommandGetStatus @"status"
 #define TestAAgentCommandGetSessions @"sessions"
+#define TestAAgentCommandSetSourceFormtDescription @"description"
+#define TestAAgentCommandSetSourceFormatDefault @"defaylt_format"
 
 static const in_port_t TestWaAgentIPv4PortNumber = 5000;
 

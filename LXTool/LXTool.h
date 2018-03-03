@@ -15,6 +15,8 @@
 #import "Utility.h"
 #import "ANSIUtility.h"
 
+#import "NSColor+LX.h"
+
 
 @interface LXTool : NSObject
 

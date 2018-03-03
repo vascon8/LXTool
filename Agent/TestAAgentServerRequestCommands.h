@@ -39,6 +39,8 @@ typedef void (^TestAAgentUSBCallback)(NSError *error);
 + (instancetype)getSource;
 + (instancetype)getTree;
 + (instancetype)getTreeWithoutSession;
++ (instancetype)setFormatDes;
++ (instancetype)setFormatDefault;
 
 #pragma mark - session
 + (instancetype)getStatus;

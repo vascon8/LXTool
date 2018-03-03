@@ -51,4 +51,7 @@ static const NSTimeInterval TestWaAgentReconnectDelay = 1.0;
 - (void)deallocAgent;
 
 + (void)removeAgentTempFile;
+
+#pragma mark - format
+-(void)alwaysUseSourceFormatDescription:(BOOL)useFormatDescription;
 @end

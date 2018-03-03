@@ -14,6 +14,9 @@
 #define TestWaDefaultMiniCapPath @"Contents/Vendor"
 #define TestWaDefaultAndroidMiniCapPath [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:TestWaDefaultMiniCapPath]
 
+typedef void(^TaskMsgBlock)(NSString *output);
+typedef void(^TaskFinishBlock)();
+
 @interface Utility : NSObject
 
 +(NSString*) pathToAndroidBinary:(NSString*)binaryName atSDKPath:(NSString*)sdkPath;
@@ -79,4 +82,12 @@
 + (float)angleOfStartPoint:(NSPoint)startPoint endPoint:(NSPoint)endPoint;
 + (NSString*)directionForAngle:(float)angle;
 + (NSString*)directionString:(NSString*)direction;
+
+@property NSTask *task;
++ (NSDictionary*)runSecurityCheckInDefaultShellWithProfilePath:(NSString*)profilePath;
++ (void)openFileInDefaultShellWithFilePath:(NSString*)FilePath;
++ (NSArray*)schemesWithPrjPath:(NSString*)PrjPath;
++(NSString*)xcodebuildCleanPrj:(NSString*)prjPath;
+-(NSString*)xcodebuildPrj:(NSString*)prjPath scheme:(NSString*)scheme ppuuid:(NSString*)ppuuid teamID:(NSString*)teamID taskmsgBlock:(TaskMsgBlock)msgblock taskFinishBlock:(TaskFinishBlock)finishBlock;
+-(NSString*)xcodebuildArchivePrj:(NSString*)prjPath scheme:(NSString*)scheme ppuuid:(NSString*)ppuuid teamID:(NSString*)teamID taskmsgBlock:(TaskMsgBlock)msgblock taskFinishBlock:(TaskFinishBlock)finishBlock;
 @end

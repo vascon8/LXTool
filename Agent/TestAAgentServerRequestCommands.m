@@ -100,6 +100,14 @@
 {
     return [self GET:[self decoreatePath:TestAAgentCommandGetTree] requiresSession:NO action:TestAAgentCommandGetTree];
 }
++ (instancetype)setFormatDes
+{
+    return [self POST:[self decoreatePath:TestAAgentCommandSetSourceFormtDescription] requiresSession:YES action:TestAAgentCommandSetSourceFormtDescription];
+}
++ (instancetype)setFormatDefault
+{
+    return [self POST:[self decoreatePath:TestAAgentCommandSetSourceFormatDefault] requiresSession:YES action:TestAAgentCommandSetSourceFormatDefault];
+}
 #pragma mark - session
 + (instancetype)getStatus
 {
